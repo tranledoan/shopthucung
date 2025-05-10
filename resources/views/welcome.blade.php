@@ -29,8 +29,8 @@
                     <i id="bars" class="fa fa-bars" aria-hidden="true"></i>
                     <ul>
                         <li><a href="{{ route('home') }}">Trang chủ</a></li>
-                        <li><a href="">Con giống</a></li>
-                        <li><a href="services.html">Dịch vụ</a></li>
+                        <li><a href="{{ route('congiong') }}">Con giống</a></li>
+                        <li><a href="{{ route('services') }}">Dịch vụ</a></li>
                         <li><a href="donhang.html">Đơn hàng</a></li>
                     </ul>
                 </div>

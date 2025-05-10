@@ -14,29 +14,58 @@ use Illuminate\Support\Facades\URL;
 class HomeController extends Controller
 {
 
-    private $sanphamRepository;
-    public function index()
-{
-    // Dữ liệu giả
-    $danhsachsp = [
-        (object)[
-            'tensp' => 'Chó Poodle',
-            'gia' => 3000000,
-            'hinhanh' => 'frontend/img/poodle.jpg',
-        ],
-        (object)[
-            'tensp' => 'Mèo Anh lông ngắn',
-            'gia' => 2500000,
-            'hinhanh' => 'frontend/img/meo-anh.jpg',
-        ],
-        // Thêm bao nhiêu sản phẩm tùy thích
-    ];
+   private $sanphamRepository;
 
-    return view('pages.home', compact('danhsachsp'));
+    public function __construct(ISanphamRepository $sanphamRepository) {
+        $this->sanphamRepository = $sanphamRepository;
+    }
+
+    public function index(){
+        $alls = $this->sanphamRepository->allProduct();
+        $sanphams = $this->sanphamRepository->relatedProduct();
+        $dogproducts = $this->sanphamRepository->dogProduct();
+        $catproducts = $this->sanphamRepository->catProduct();
+        $choGiongs = $this->sanphamRepository->choGiong();
+        $meoGiongs = $this->sanphamRepository->meoGiong();
+        return view('pages.home', [
+            'alls' => $alls,
+            'sanphams' => $sanphams,
+            'dogproducts' => $dogproducts,
+            'catproducts' => $catproducts,
+            'choGiongs' => $choGiongs,
+            'meoGiongs' => $meoGiongs,
+        ]);
+    }
+
+    //-- hieu 
+    public function showFeaturedProducts()
+{
+    $sanphams = Sanpham::all(); 
+    return view('yourview', compact('sanphams'));
 }
 
+    public function congiong(){
+        $choGiongs = $this->sanphamRepository->choGiong();
+        $meoGiongs = $this->sanphamRepository->meoGiong();
 
-   
+        return view('pages.congiong', [
+            'choGiongs' => $choGiongs,
+            'meoGiongs' => $meoGiongs,
+        ]);
+    }
+     public function detail($id){
+        // Lấy thông tin của sản phẩm dựa trên $id
+        $sanpham = Sanpham::findOrFail($id);
+        $randoms = $this->sanphamRepository->randomProduct()->take(5);
+        return view('pages.detail', ['sanpham' => $sanpham, 'randoms' => $randoms]);
+    }
 
-   
+    public function viewAll() {
+    $alls = $this->sanphamRepository->allProduct();
+    return view('pages.viewall', ['alls' => $alls]);
+}
+ public function services(){
+        return view('pages.services');
+    }    
+
 }

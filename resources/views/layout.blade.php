@@ -21,16 +21,16 @@
     <div class="header">
         <div class="navbar">
             <div class="navbar__left">
-                <a href="index.html" class="navbar__logo">
+                <a href="{{ URL::to('/')}}" class="navbar__logo">
                     <img src="frontend/img/logo.jpg" alt="">
                 </a>
 
                 <div class="navbar__menu">
                     <i id="bars" class="fa fa-bars" aria-hidden="true"></i>
                     <ul>
-                        <li><a href="index.html">Trang chủ</a></li>
-                        <li><a href="congiong.html">Con giống</a></li>
-                        <li><a href="services.html">Dịch vụ</a></li>
+                        <li><a href="{{ URL::to('/')}}">Trang chủ</a></li>
+                        <li><a href="{{ URL::to('/congiong')}}">Con giống</a></li>
+                        <li><a href="{{ URL::to('/services')}}">Dịch vụ</a></li>
                         <li><a href="donhang.html">Đơn hàng</a></li>
                     </ul>
                 </div>
