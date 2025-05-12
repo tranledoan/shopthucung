@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,7 +37,11 @@
                             <a href="{{ URL::to('/services')}}">Dịch vụ</a>
                         </li>
                         <li>
+
                             <a href="{{ URL::to('/donhang')}}">Đơn hàng</a>
+
+                            <a href="donhang.html">Đơn hàng</a>
+
                         </li>
                     </ul>
                 </div>
@@ -55,10 +60,17 @@
                 @if (Auth::check())
                 <!-- Hiển thị nút logout -->
 
+
                 <span class="mr-2">{{Auth::user()->hoten}}</span>
 
                 <div class="logout">
                     <form action="{{ route('logout') }}" method="POST">
+
+                <span class="mr-2"></span>
+
+                <div class="logout">
+                    <form action="" method="POST">
+
                         @csrf
                         @method('DELETE')
                         <button style="border: none;" type="submit"><i class="fas fa-sign-out-alt text-primary"></i></button>
@@ -67,15 +79,24 @@
                 @else
                     <!-- Hiển thị nút login -->
                     <div class="login">
+
                         <a href="{{ URL::to('login')}}"><i class="fa fa-user"></i> </a>
+
+                        <a href=""><i class="fa fa-user"></i> </a>
+
                     </div>
                 @endif
             
                 <a href="" class="navbar__shoppingCart">
                     <img src="{{ asset('frontend/img/shopping-cart.svg')}}" style="width: 24px;" alt="">
                     
+
                     @if (session('cart'))
                         <span>{{ count((array) session('cart')) }}</span>
+
+                    @if (session(''))
+                        <span></span>
+
                     @else
                         <span>0</span>
                     
@@ -115,10 +136,14 @@
             <div class="footer__info-content">
                 <h3>Liên hệ</h3>
 
+
                 <p>Địa chỉ: 53 Vo Van Ngan</p>
+
+                <p>Địa chỉ: 53 Võ Văn Ngân , Thủ Đức , Hồ Chí Minh</p>
+
                 <p>Email: hieuchung428@gmail.com</p>
                 <p>Sđt: 0372334658</p>
-            </div>
+            </div>  
 
                 <p>Địa chỉ: 53 Võ Văn Ngân , Thủ Đức , Hồ Chí Minh</p>
                 <p>Email: hieuchung428@gmail.com</p>
@@ -136,6 +161,8 @@
 
         <div class="footer__copyright">
             <center>Đồ Án Lập Trình BackEnd-Web2 2025</center>
+
+
 
         </div>
     </footer>
