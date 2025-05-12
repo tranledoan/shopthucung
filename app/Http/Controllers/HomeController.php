@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\URL;
 class HomeController extends Controller
 {
 
-   private $sanphamRepository;
+    private $sanphamRepository;
 
     public function __construct(ISanphamRepository $sanphamRepository) {
         $this->sanphamRepository = $sanphamRepository;
@@ -53,19 +53,9 @@ class HomeController extends Controller
             'meoGiongs' => $meoGiongs,
         ]);
     }
-     public function detail($id){
-        // Lấy thông tin của sản phẩm dựa trên $id
-        $sanpham = Sanpham::findOrFail($id);
-        $randoms = $this->sanphamRepository->randomProduct()->take(5);
-        return view('pages.detail', ['sanpham' => $sanpham, 'randoms' => $randoms]);
-    }
 
-    public function viewAll() {
-    $alls = $this->sanphamRepository->allProduct();
-    return view('pages.viewall', ['alls' => $alls]);
-}
- public function services(){
+    public function services(){
         return view('pages.services');
-    }    
-
+    }
+    
 }

@@ -600,9 +600,7 @@
             </div>
             @endforeach
         </div>
-        <center style="margin-top: 30px;">
-            <a href="{{route('viewAll')}}" class="btn text-white" style="background: #ff4500;">Xem thêm</a>
-        </center>
+      
     </div>
 
 </div>
