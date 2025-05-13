@@ -16,11 +16,13 @@ class HomeController extends Controller
 
     private $sanphamRepository;
 
-    public function __construct(ISanphamRepository $sanphamRepository) {
+    public function __construct(ISanphamRepository $sanphamRepository)
+    {
         $this->sanphamRepository = $sanphamRepository;
     }
 
-    public function index(){
+    public function index()
+    {
         $alls = $this->sanphamRepository->allProduct();
         $sanphams = $this->sanphamRepository->relatedProduct();
         $dogproducts = $this->sanphamRepository->dogProduct();
@@ -39,12 +41,13 @@ class HomeController extends Controller
 
     //-- hieu 
     public function showFeaturedProducts()
-{
-    $sanphams = Sanpham::all(); 
-    return view('yourview', compact('sanphams'));
-}
+    {
+        $sanphams = Sanpham::all();
+        return view('yourview', compact('sanphams'));
+    }
 
-    public function congiong(){
+    public function congiong()
+    {
         $choGiongs = $this->sanphamRepository->choGiong();
         $meoGiongs = $this->sanphamRepository->meoGiong();
 
@@ -54,8 +57,15 @@ class HomeController extends Controller
         ]);
     }
 
-    public function services(){
+    // xem them
+    public function viewAll()
+    {
+        $viewAllPaginations = $this->sanphamRepository->viewAllWithPagi();
+        return view('pages.viewall', ['sanphams' => $viewAllPaginations]);
+    }
+    public function services()
+    {
         return view('pages.services');
     }
-    
+
 }
