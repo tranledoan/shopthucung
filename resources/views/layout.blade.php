@@ -50,7 +50,7 @@
             </div>
 
             <div class="navbar__center">
-                <form action="" method="GET" class="navbar__search">
+                <form action="{{route('search')}}" method="GET" class="navbar__search">
                     <input type="text" value="" placeholder="Nhập để tìm kiếm..." name="tukhoa" class="search" required>
                     <i class="fa fa-search" id="searchBtn"></i>
                 </form>
