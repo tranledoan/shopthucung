@@ -39,7 +39,7 @@
                         </li>
                         <li>
 
-                            <a href="{{ URL::to('/donhang')}}">Đơn hàng</a>
+
 
                             <a href="donhang.html">Đơn hàng</a>
 
@@ -76,7 +76,7 @@
                     <div class="login">
                         <a href="{{ URL::to('login') }}"><i class="fa fa-user"></i></a>
                     </div>
-                @endif 
+                @endif
 
                 <a href="" class="navbar__shoppingCart">
                     <img src="{{ asset('frontend/img/shopping-cart.svg') }}" style="width: 24px;" alt="">
@@ -102,7 +102,8 @@
             <div class="footer__title">
                 <span>Liên hệ</span>
                 <div class="footer__social">
-                    <a href="facebook.com/hieuanh" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://facebook.com/hieuanh" target="_blank">
+                        <i class="fab fa-facebook-f"></i></a>
                     <a href="#"><i class="fab fa-github"></i></a>
                     <a href="#"><i class="fab fa-google"></i></a>
                 </div>
@@ -120,30 +121,23 @@
 
             <div class="footer__info-content">
                 <h3>Liên hệ</h3>
-
-
-                <p>Địa chỉ: 53 Vo Van Ngan</p>
-
                 <p>Địa chỉ: 53 Võ Văn Ngân , Thủ Đức , Hồ Chí Minh</p>
-
                 <p>Email: hieuchung428@gmail.com</p>
                 <p>Sđt: 0372334658</p>
             </div>
 
-            <p>Địa chỉ: 53 Võ Văn Ngân , Thủ Đức , Hồ Chí Minh</p>
-            <p>Email: hieuchung428@gmail.com</p>
-            <p>Sđt: 0372334658</p>
+
+
+            <div class="footer__info-content">
+                <h3>Fanpage</h3>
+                <p><iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2F%3Flocale%3Dvi_VN&tabs=timeline&width=300px&height=150px&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId
+             " width="100%" height="150px" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
+                        allowfullscreen="true"
+                        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe></p>
+            </div>
         </div>
 
 
-        <div class="footer__info-content">
-            <h3>Fanpage</h3>
-            <p><iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2F%3Flocale%3Dvi_VN&tabs=timeline&width=300px&height=150px&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId
-" width="100%" height="150px" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true"
-                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe></p>
-        </div>
-
-        </div>
 
         <div class="footer__copyright">
             <center>Đồ Án Lập Trình BackEnd-Web2 2025</center>
