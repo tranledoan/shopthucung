@@ -67,5 +67,9 @@ class HomeController extends Controller
     {
         return view('pages.services');
     }
+     public function search(Request $request){
+        $searchs = $this->sanphamRepository->searchProduct($request);
+        return view('pages.search')->with('searchs', $searchs)->with('tukhoa', $request->input('tukhoa'));
+    }
 
 }
