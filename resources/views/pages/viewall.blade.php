@@ -58,5 +58,21 @@
             @endforeach
 
         </div>
+         <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item @if($sanphams->currentPage() === 1) disabled @endif">
+                    <a class="page-link" href="{{ $sanphams->previousPageUrl() }}">Previous</a>
+                </li>
+                @for ($i = 1; $i <= $sanphams->lastPage(); $i++)
+                    <li class="page-item @if($sanphams->currentPage() === $i) active @endif">
+                        <a class="page-link" href="{{ $sanphams->url($i) }}">{{ $i }}</a>
+                    </li>
+                @endfor
+                <li class="page-item @if($sanphams->currentPage() === $sanphams->lastPage()) disabled @endif">
+                    <a class="page-link" href="{{ $sanphams->nextPageUrl() }}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
     </div>
     @endsection
