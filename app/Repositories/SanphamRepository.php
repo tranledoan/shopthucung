@@ -40,6 +40,12 @@ class SanphamRepository implements ISanphamRepository{
     {
         return Sanpham::paginate(10);
     }
+    // tim kiem 
+     public function searchProduct($data)
+    {
+        $searchKeyword = $data->input('tukhoa');
+        return Sanpham::where('tensp', 'like', '%' . $searchKeyword . '%')->paginate(5);
+    }
     
     
 
