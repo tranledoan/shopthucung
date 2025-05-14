@@ -67,9 +67,18 @@ class HomeController extends Controller
     {
         return view('pages.services');
     }
+
      public function search(Request $request){
         $searchs = $this->sanphamRepository->searchProduct($request);
         return view('pages.search')->with('searchs', $searchs)->with('tukhoa', $request->input('tukhoa'));
+     }
+
+     public function detail($id){
+        // Lấy thông tin của sản phẩm dựa trên $id
+        $sanpham = Sanpham::findOrFail($id);
+        $randoms = $this->sanphamRepository->randomProduct()->take(5);
+        return view('pages.detail', ['sanpham' => $sanpham, 'randoms' => $randoms]);
+
     }
 
 }

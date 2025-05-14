@@ -68,12 +68,7 @@
     
                         </div>
     
-                        <div class="product__cart">
-                            <a href="{{ route('add_to_cart', $sanpham->id_sanpham) }}" class="product__cart-add" name="add-to-cart">
-                                Thêm vào giỏ hàng
-                            </a>
-                            <a href="{{ route('add_go_to_cart', $sanpham->id_sanpham) }}" class="product__cart-buy" name="buy-now">Mua ngay</a>
-                        </div>
+                    
     
                     </form>
                 </div>
