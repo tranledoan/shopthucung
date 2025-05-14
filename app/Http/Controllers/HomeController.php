@@ -67,5 +67,11 @@ class HomeController extends Controller
     {
         return view('pages.services');
     }
+     public function detail($id){
+        // Lấy thông tin của sản phẩm dựa trên $id
+        $sanpham = Sanpham::findOrFail($id);
+        $randoms = $this->sanphamRepository->randomProduct()->take(5);
+        return view('pages.detail', ['sanpham' => $sanpham, 'randoms' => $randoms]);
+    }
 
 }
