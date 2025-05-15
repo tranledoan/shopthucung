@@ -11,7 +11,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('login.khachhang') }}" method="POST" class="form" id="form-2">
+                <form action="{{route('login')}}" method="POST" class="form" id="form-2">
                    @csrf 
                     <h3 class="heading">Đăng nhập</h3>
     
