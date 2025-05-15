@@ -8,13 +8,11 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('chitiet_donhang', function (Blueprint $table) {
-            $table->foreign('id_dathang')
+             $table->foreign('id_dathang')
                   ->references('id_dathang')
                   ->on('dathang')
                   ->onUpdate('restrict')
@@ -24,13 +22,11 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('chitiet_donhang', function (Blueprint $table) {
-            $table->dropForeign(['id_dathang']);
+             $table->dropForeign(['id_dathang']);
         });
     }
 };

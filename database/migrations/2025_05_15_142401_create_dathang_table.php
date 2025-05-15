@@ -8,13 +8,11 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('dathang', function (Blueprint $table) {
-            $table->increments('id_dathang'); // Change to increments for auto-increment
+            $table->increments('id_dathang'); 
             $table->dateTime('ngaydathang')->nullable()->useCurrent();
             $table->dateTime('ngaygiaohang')->nullable()->useCurrent();
             $table->integer('tongtien');
@@ -22,18 +20,15 @@ return new class extends Migration
             $table->string('diachigiaohang', 100)->nullable();
             $table->string('trangthai', 100)->nullable();
             $table->integer('id_kh');
-            $table->index('id_dathang'); // Add index to id_dathang
+            $table->index('id_dathang'); 
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('dathang');
     }
-}
-;
+};
