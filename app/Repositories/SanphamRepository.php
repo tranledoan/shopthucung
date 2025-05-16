@@ -47,10 +47,6 @@ class SanphamRepository implements ISanphamRepository{
         return Sanpham::where('tensp', 'like', '%' . $searchKeyword . '%')->paginate(5);
     }
     
-    public function viewAllWithPagi()
-    {
-        return Sanpham::paginate(10);
-    }
     
 
 }
