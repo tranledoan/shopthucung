@@ -30,46 +30,46 @@
     @endforeach
 
 
-    <form method="POST" action="" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('orders.update', ['orders' => $order->id_dathang]) }}" enctype="multipart/form-data">
         @csrf
         @method('put')
 
         <div class="mb-3">
             <label for="id_dathang" class="form-label">ID đơn hàng</label>
-            <input type="text" class="form-control" id="id_dathang" name="id_dathang" value="" disabled>
+            <input type="text" class="form-control" id="id_dathang" name="id_dathang" value="{{$order->id_dathang}}" disabled>
         </div>
 
         <div class="mb-3">
             <label for="ngaydathang" class="form-label">Ngày đặt</label>
-            <input type="text" class="form-control" id="ngaydathang" name="ngaydathang" value="" disabled>
+            <input type="text" class="form-control" id="ngaydathang" name="ngaydathang" value="{{$order->ngaydathang}}" disabled>
         </div>
 
         <div class="mb-3">
             <label for="ngaygiaohang" class="form-label">Ngày giao</label>
             @if($order->ngaygiaohang)
-                <input type="date" class="form-control" id="ngaygiaohang" name="ngaygiaohang" value="">
+                <input type="date" class="form-control" id="ngaygiaohang" name="ngaygiaohang" value="{{ date('Y-m-d', strtotime($order->ngaygiaohang)) }}">
             @else
-                <input type="date" class="form-control" id="ngaygiaohang" name="ngaygiaohang" value="">
+                <input type="date" class="form-control" id="ngaygiaohang" name="ngaygiaohang" value="{{ date('Y-m-d') }}">
             @endif
         </div>        
 
         <div class="mb-3">
             <label for="phuongthucthanhtoan" class="form-label">Phương thức thanh toán</label>
-            <input type="text" class="form-control" id="phuongthucthanhtoan" name="phuongthucthanhtoan" value="" disabled>
+            <input type="text" class="form-control" id="phuongthucthanhtoan" name="phuongthucthanhtoan" value="{{$order->phuongthucthanhtoan}}" disabled>
         </div>
 
         <div class="mb-3">
             <label for="diachigiaohang" class="form-label">Địa chỉ giao hàng</label>
-            <input type="text" class="form-control" id="diachigiaohang" name="diachigiaohang" value="" required>
+            <input type="text" class="form-control" id="diachigiaohang" name="diachigiaohang" value="{{$order->diachigiaohang}}" required>
         </div>
 
         <div class="mb-3">
             <label for="trangthai" class="form-label">Trạng thái</label>
             <select class="form-select" id="trangthai" name="trangthai" required>
-                <option value="đang xử lý" >Đang xử lý</option>
-                <option value="chờ lấy hàng" >Chờ lấy hàng</option>
-                <option value="đang giao hàng">Đang giao hàng</option>
-                <option value="giao thành công" >Giao thành công</option>
+                <option value="đang xử lý" {{ $order->trangthai == 'đang xử lý' ? 'selected' : '' }}>Đang xử lý</option>
+                <option value="chờ lấy hàng" {{ $order->trangthai == 'chờ lấy hàng' ? 'selected' : '' }}>Chờ lấy hàng</option>
+                <option value="đang giao hàng" {{ $order->trangthai == 'đang giao hàng' ? 'selected' : '' }}>Đang giao hàng</option>
+                <option value="giao thành công" {{ $order->trangthai == 'giao thành công' ? 'selected' : '' }}>Giao thành công</option>
             </select>
         </div>
         
@@ -84,6 +84,24 @@
                     <th>tổng tiền</th>
                 </thead>
                 <tbody>
+                    @php
+                        $totalPrice = 0; // Khởi tạo biến tổng tiền
+                    @endphp
+                    @foreach ($orderdetails as $orderdetail)
+                        <tr>
+                            <td>{{$orderdetail->tensp}}</td>
+                            <td>{{$orderdetail->soluong}}</td>
+                            <td>{{$orderdetail->giatien}}</td>
+                            <td>{{$orderdetail->giamgia}}%</td>
+                            <td>{{$orderdetail->giakhuyenmai}}</td>
+                            <td>{{$orderdetail->giakhuyenmai * $orderdetail->soluong}}</td>
+                        </tr>
+
+                        @php
+                            $totalPrice += $orderdetail->giakhuyenmai * $orderdetail->soluong; // Cộng giá trị tổng tiền
+                        @endphp
+
+                    @endforeach
 
                 </tbody>
             </table>
@@ -91,7 +109,7 @@
 
         <div class="mb-3">
             <label for="tongiten" class="form-label">Tiền ước tính</label>
-            <input type="text" class="form-control" id="tongiten" name="tongiten" value="" disabled>
+            <input type="text" class="form-control" id="tongiten" name="tongiten" value="{{$totalPrice}}" disabled>
         </div>
 
 

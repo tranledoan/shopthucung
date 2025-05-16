@@ -45,20 +45,20 @@
             <td></td>
           @endif
         <td>
-       
-            <span class="badge bg-primary"></span>
-        
-            <span class="badge bg-warning"></span>
-         
-            <span class="badge bg-success"></span>
-         
-            <span class="badge bg-success"></span>
-          
-            <span class="badge bg-danger"></span>
-         
+          @if($order->trangthai == 'đang xử lý')
+            <span class="badge bg-primary">{{$order->trangthai}}</span>
+          @elseif ($order->trangthai == 'chờ lấy hàng')
+            <span class="badge bg-warning">{{$order->trangthai}}</span>
+          @elseif ($order->trangthai == 'đang giao hàng')
+            <span class="badge bg-success">{{$order->trangthai}}</span>
+          @elseif ($order->trangthai == 'giao thành công')
+            <span class="badge bg-success">{{$order->trangthai}}</span>
+          @else
+            <span class="badge bg-danger">{{$order->trangthai}}</span>
+          @endif
         </td>
-        <td class="d-none d-md-table-cell"></td>
-        <td class="d-none d-md-table-cell"><a href="" class="btn btn-primary">Edit</a></td>
+        <td class="d-none d-md-table-cell">{{$order->diachigiaohang}}</td>
+        <td class="d-none d-md-table-cell"><a href="{{ route('orders.edit', ['orders' => $order->id_dathang]) }}" class="btn btn-primary">Edit</a></td>
       </tr>
       <tr>
       @endforeach
@@ -67,6 +67,18 @@
 
 </div>
 
-
+<ul class="pagination">
+  <li class="page-item @if($orders->currentPage() === 1) disabled @endif">
+      <a class="page-link" href="{{ $orders->previousPageUrl() }}">Previous</a>
+  </li>
+  @for ($i = 1; $i <= $orders->lastPage(); $i++)
+      <li class="page-item @if($orders->currentPage() === $i) active @endif">
+          <a class="page-link" href="{{ $orders->url($i) }}">{{ $i }}</a>
+      </li>
+  @endfor
+  <li class="page-item @if($orders->currentPage() === $orders->lastPage()) disabled @endif">
+      <a class="page-link" href="{{ $orders->nextPageUrl() }}">Next</a>
+  </li>
+</ul>
 
 @endsection

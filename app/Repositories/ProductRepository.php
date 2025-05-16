@@ -6,7 +6,7 @@ use App\Models\Sanpham;
 
 class ProductRepository implements IProductRepository{
     public function allProduct(){
-        return Sanpham::paginate(10);
+        return Sanpham::paginate(5);
     }
     
 }

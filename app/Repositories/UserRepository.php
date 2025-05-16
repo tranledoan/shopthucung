@@ -6,7 +6,7 @@ use App\Models\Khachhang;
 
 class UserRepository implements IUserRepository{
     public function allKhachhang(){
-        return Khachhang::all();
+        return Khachhang::paginate(5);
     }
  
 }

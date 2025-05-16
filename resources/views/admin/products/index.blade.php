@@ -13,7 +13,7 @@
 <div class="d-flex justify-content-between">
   <a class="btn btn-primary" href="">Thêm sản phẩm</a>
 
-  <form action="" method="GET" class="d-flex">
+  <form action="{{route('adminSearch')}}" method="GET" class="d-flex">
       <input type="text" value="" placeholder="Nhập để tìm kiếm..." name="tukhoa" class="form-control" style="width: unset;" required>
       <button class="btn btn-primary" type="submit">
         <i class="align-middle" data-feather="search"></i> 
@@ -61,5 +61,19 @@
   @endforeach
 </tbody>
 </table>
-
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+      <li class="page-item @if($products->currentPage() === 1) disabled @endif">
+          <a class="page-link" href="{{ $products->previousPageUrl() }}">Previous</a>
+      </li>
+      @for ($i = 1; $i <= $products->lastPage(); $i++)
+          <li class="page-item @if($products->currentPage() === $i) active @endif">
+              <a class="page-link" href="{{ $products->url($i) }}">{{ $i }}</a>
+          </li>
+      @endfor
+      <li class="page-item @if($products->currentPage() === $products->lastPage()) disabled @endif">
+          <a class="page-link" href="{{ $products->nextPageUrl() }}">Next</a>
+      </li>
+  </ul>
+</nav>
 @endsection

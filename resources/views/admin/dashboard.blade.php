@@ -171,7 +171,7 @@
                     @endif
                   </td>
                   <td class="d-none d-md-table-cell">{{$order->diachigiaohang}}</td>
-                  <td class="d-none d-md-table-cell"><a href="" class="btn btn-primary">Edit</a></td>
+                  <td class="d-none d-md-table-cell"><a href="{{ route('orders.edit', ['orders' => $order->id_dathang]) }}" class="btn btn-primary">Edit</a></td>
                 </tr>
                 <tr>
                 @endforeach

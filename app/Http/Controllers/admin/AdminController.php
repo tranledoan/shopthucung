@@ -34,6 +34,10 @@ class AdminController extends Controller
          'totalsSaleProducts' => $totalsSaleProducts
         ]);
     }
+    public function search(Request $request){
+        $searchs = $this->AdminRepository->searchProduct($request);
+        return view('admin.products.search')->with('searchs', $searchs)->with('tukhoa', $request->input('tukhoa'));
+    }
    
 
     public function signin_dashboard(Request $request){

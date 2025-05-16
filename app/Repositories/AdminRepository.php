@@ -44,6 +44,11 @@ class AdminRepository implements IAdminRepository{
         ->sum('chitiet_donhang.soluong');
     }
 
+    public function searchProduct($data)
+    {
+        $searchKeyword = $data->input('tukhoa');
+        return Sanpham::where('tensp', 'like', '%' . $searchKeyword . '%')->paginate(5);
+    }
 
 
 

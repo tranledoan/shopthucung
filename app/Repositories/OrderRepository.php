@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class OrderRepository implements IOrderRepository{
 
     public function allOrder(){
-        return Dathang::orderBy('id_dathang', 'desc')->paginate(2);
+        return Dathang::orderBy('id_dathang', 'desc')->paginate(3);
     }
     public function findOrder($id){
         return Dathang::where('id_dathang', $id)->first();
