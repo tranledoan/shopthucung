@@ -7,7 +7,7 @@ use App\Models\Danhmuc;
 class DanhmucRepository implements IDanhmucRepository{
 
     public function allDanhmuc(){
-        return Danhmuc::all();
+        return Danhmuc::paginate(5);
     }
     public function storeDanhmuc($data){
         Danhmuc::create($data);

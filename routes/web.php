@@ -3,9 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderViewController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\admin\AdminController;
-use App\Http\Controllers\admin\ProductController;
-use App\Http\Controllers\admin\DanhmucController;
+
 use App\Http\Controllers\{
     HomeController,
     CartController
@@ -14,6 +12,9 @@ use App\Http\Controllers\{
 
 
 
+
+
+use App\Http\Controllers\admin\{AdminController,ProductController,DanhmucController,OrderController,UserController};
 
 Route::get('/', function () {
   return view('layout');
@@ -69,6 +70,7 @@ Route::prefix('/')->middleware('orderview')->group(function(){
     Route::get('/donhang/edit/{id}', [OrderViewController::class, 'edit'])->name('donhang.edit');
 });
 
+
 //admin
    //login
    
@@ -98,3 +100,35 @@ Route::prefix('admin')->group(function () {
     //product
 });
     
+
+Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+  //Route::get('/dashboard', [AdminController::class, 'dashboard']);
+  Route::get('/admin_logout', [AdminController::class, 'admin_logout']);
+
+  Route::get('/admin/product', [ProductController::class, 'index'])->name('product.index');
+ 
+
+  Route::post('/admin/product', [ProductController::class, 'store'])->name('product.store');
+  Route::get('/admin/product/edit/{product}', [ProductController::class, 'edit'])->name('product.edit');
+  
+
+  Route::get('/admin/danhmuc', [DanhmucController::class, 'index'])->name('danhmuc.index');
+  Route::get('/admin/danhmuc/create', [DanhmucController::class, 'create'])->name('danhmuc.create');
+  
+  Route::get('/admin/danhmuc/edit/{danhmuc}', [DanhmucController::class, 'edit'])->name('danhmuc.edit');
+ 
+  Route::delete('/admin/danhmuc/{danhmuc}/destroy', [DanhmucController::class, 'destroy'])->name('danhmuc.destroy');
+
+  Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders.index');
+  
+  Route::get('/admin/khachhang', [UserController::class, 'index'])->name('khachhang.index');
+   Route::get('/admin/product/search', [AdminController::class, 'search'])->name('adminSearch');
+   Route::get('/admin/product/create', [ProductController::class, 'create'])->name('product.create');
+  Route::delete('/admin/product/{product}/destroy', [ProductController::class, 'destroy'])->name('product.destroy');
+   Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders.index');
+  Route::get('/admin/orders/edit/{orders}', [OrderController::class, 'edit'])->name('orders.edit');
+  Route::put('/admin/orders/update/{orders}', [OrderController::class, 'update'])->name('orders.update');
+
+Route::get('/admin/user/search', [UserController::class, 'search'])->name('adminSearchUser');
+

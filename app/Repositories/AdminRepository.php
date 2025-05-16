@@ -37,6 +37,7 @@ class AdminRepository implements IAdminRepository{
         return Sanpham::where('tensp', 'like', '%' . $searchKeyword . '%')->paginate(5);
     }
 
+
     public function getOrderView()
     {
         return Dathang::orderby('id_dathang', 'desc')->take(6)->get();
@@ -65,4 +66,11 @@ class AdminRepository implements IAdminRepository{
         ->where('dathang.trangthai', 'giao thành công')
         ->sum('chitiet_donhang.soluong');
     }
+
 }
+
+
+    
+
+
+

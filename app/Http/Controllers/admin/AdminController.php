@@ -37,10 +37,12 @@ class AdminController extends Controller
         $searchs = $this->AdminRepository->searchProduct($request);
         return view('admin.products.search')->with('searchs', $searchs)->with('tukhoa', $request->input('tukhoa'));
     }
+
     public function signin_dashboard(Request $request){
         return $this->AdminRepository->signIn($request);
     }
     public function admin_logout(){
         return $this->AdminRepository->logOut();
     }
+
 }

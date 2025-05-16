@@ -6,8 +6,9 @@ use App\Models\Sanpham;
 
 class ProductRepository implements IProductRepository{
 
+
     public function allProduct(){
-        return Sanpham::paginate(10);
+        return Sanpham::paginate(5);
     }
     public function storeProduct($data){
         Sanpham::create($data);
@@ -21,4 +22,5 @@ class ProductRepository implements IProductRepository{
     public function deleteProduct($id){
         $this->findProduct($id)->delete();
     }
+
 }
