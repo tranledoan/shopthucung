@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Http\Controllers\admin;
+
+use Illuminate\Http\Request;
+use App\Repositories\IAdminRepository;
+use App\Http\Controllers\Controller;
+
+class AdminController extends Controller
+{
+
+    private $AdminRepository;
+
+    public function __construct(IAdminRepository $AdminRepository) {
+        $this->AdminRepository = $AdminRepository;
+    }
+
+    public function index(){
+        return view('admin_login');
+    }
+    public function dashboard(){
+        $getOrderView = $this->AdminRepository->getOrderView();
+        $totalsCustomer = $this->AdminRepository->totalsCustomer();
+        $totalsOrders = $this->AdminRepository->totalsOrders();
+        $totalsMoney = $this->AdminRepository->totalsMoney();
+        $totalsSaleProducts = $this->AdminRepository->totalsSaleProducts();
+        return view('admin.dashboard', 
+        [
+         'getOrderView' => $getOrderView,
+         'totalsCustomer' => $totalsCustomer,
+         'totalsOrders' =>  $totalsOrders, 
+         'totalsMoney' => $totalsMoney, 
+         'totalsSaleProducts' => $totalsSaleProducts
+        ]);
+    }
+   
+}
