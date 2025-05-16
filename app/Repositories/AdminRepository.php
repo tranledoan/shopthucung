@@ -13,6 +13,30 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminRepository implements IAdminRepository{
 
+    public function signIn($data){
+        $credetials = [
+            'email' => $data->email,
+            'password' => $data->password
+        ];
+
+        if(Auth::attempt($credetials)){
+            return redirect('/dashboard');
+        }
+
+        return back()->with('thongbao', 'Sai tên tài khoản hoặc mật khẩu');
+
+    }
+    public function logOut(){
+        Auth::logout();
+        return redirect('/admin');
+    }
+
+    public function searchProduct($data)
+    {
+        $searchKeyword = $data->input('tukhoa');
+        return Sanpham::where('tensp', 'like', '%' . $searchKeyword . '%')->paginate(5);
+    }
+
 
     public function getOrderView()
     {
@@ -43,10 +67,10 @@ class AdminRepository implements IAdminRepository{
         ->sum('chitiet_donhang.soluong');
     }
 
-    public function searchProduct($data)
-    {
-        $searchKeyword = $data->input('tukhoa');
-        return Sanpham::where('tensp', 'like', '%' . $searchKeyword . '%')->paginate(5);
-    }
-
 }
+
+
+    
+
+
+

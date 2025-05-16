@@ -46,7 +46,5 @@ class SanphamRepository implements ISanphamRepository{
         $searchKeyword = $data->input('tukhoa');
         return Sanpham::where('tensp', 'like', '%' . $searchKeyword . '%')->paginate(5);
     }
-    
-    
 
 }

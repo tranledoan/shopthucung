@@ -59,6 +59,15 @@ return [
             'throw' => false,
             'report' => false,
         ],
+        'public_frontend' => [
+            'driver' => 'local',
+            'root' => public_path('frontend_storage'),  // thư mục lưu file
+            'url' => env('APP_URL') . '/frontend_storage',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+],
+
 
     ],
 
