@@ -62,5 +62,8 @@ class Sanpham extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-   
+    public function danhMuc()
+    {
+        return $this->belongsTo(DanhMuc::class, 'id_danhmuc');
+    }
 }
