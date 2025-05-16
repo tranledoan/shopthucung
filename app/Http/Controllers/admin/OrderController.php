@@ -28,13 +28,14 @@ class OrderController extends Controller
     }
 
     public function update($id, Request $request){
-        $validatedData = $request->validate([
-            'ngaygiaohang' => 'required',
-            'trangthai' => 'required',
-        ]);
-        $this->OrderRepository->updateOrder($validatedData, $id);
+       $validatedData = $request->validate([
+        'ngaygiaohang' => 'required',
+        'trangthai' => 'required',
+        'diachigiaohang' => 'required|string|max:255', 
+    ]);
+    $this->OrderRepository->updateOrder($validatedData, $id);
 
-        return redirect()->route('orders.index')->with('success', 'Cập nhập đơn hàng thành công');
+    return redirect()->route('orders.index')->with('success', 'Cập nhập đơn hàng thành công');
     }
    
 
