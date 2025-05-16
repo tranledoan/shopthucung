@@ -61,4 +61,17 @@
       @endforeach
     </tbody>
   </table>
+  <ul class="pagination">
+  <li class="page-item @if($Khachhangs->currentPage() === 1) disabled @endif">
+      <a class="page-link" href="{{ $Khachhangs->previousPageUrl() }}">Previous</a>
+  </li>
+  @for ($i = 1; $i <= $Khachhangs->lastPage(); $i++)
+      <li class="page-item @if($Khachhangs->currentPage() === $i) active @endif">
+          <a class="page-link" href="{{ $Khachhangs->url($i) }}">{{ $i }}</a>
+      </li>
+  @endfor
+  <li class="page-item @if($Khachhangs->currentPage() === $Khachhangs->lastPage()) disabled @endif">
+      <a class="page-link" href="{{ $Khachhangs->nextPageUrl() }}">Next</a>
+  </li>
+</ul>
 @endsection
