@@ -32,10 +32,6 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => $request->password
         ];
-        if (Auth::guard('khachhang')->attempt($credetials)) {
-            return redirect('/')->with('thongbao', 'Đăng nhập thành công');
-        }
-    
 
         if(Auth::attempt($credetials)){
             return redirect('/')->with('thongbao', 'Đăng nhập thành công');
@@ -43,9 +39,6 @@ class AuthController extends Controller
 
         return back()->with('error', 'Sai tên tài khoản hoặc mật khẩu');
     }
-
-
-
 
     public function logout(){
         Auth::logout();
