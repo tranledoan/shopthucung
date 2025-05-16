@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\admin\AdminController;
+// use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderViewController;
 use Illuminate\Support\Facades\Route;
@@ -70,7 +70,7 @@ Route::prefix('/')->middleware('orderview')->group(function(){
 
 Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
-  //Route::get('/dashboard', [AdminController::class, 'dashboard']);
+  Route::get('/dashboard', [AdminController::class, 'dashboard']);
   Route::get('/admin_logout', [AdminController::class, 'admin_logout']);
 
   Route::get('/admin/product', [ProductController::class, 'index'])->name('product.index');
