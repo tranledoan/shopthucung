@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderViewController;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\{
+
 
 
     HomeController,
@@ -62,4 +65,10 @@ Route::get('/donhang', [OrderViewController:: class, 'donhang']);
 
 Route::prefix('/')->middleware('orderview')->group(function(){
     Route::get('/donhang/edit/{id}', [OrderViewController::class, 'edit'])->name('donhang.edit');
+});
+
+//admin
+Route::prefix('/')->group(function() {
+    Route::get('/admin', [AdminController:: class, 'index']);
+    Route::post('/signinDashboard', [AdminController:: class, 'signin_dashboard']);
 });
