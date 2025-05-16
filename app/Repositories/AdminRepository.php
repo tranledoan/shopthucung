@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 class AdminRepository implements IAdminRepository{
 
 
+
     public function getOrderView()
     {
         return Dathang::orderby('id_dathang', 'desc')->take(6)->get();
@@ -44,4 +45,27 @@ class AdminRepository implements IAdminRepository{
     }
 
 
+
+
+    public function signIn($data){
+        $credetials = [
+            'email' => $data->email,
+            'password' => $data->password
+        ];
+
+        if(Auth::attempt($credetials)){
+            return redirect('/dashboard');
+        }
+
+        return back()->with('thongbao', 'Sai tên tài khoản hoặc mật khẩu');
+
+    }
+    public function logOut(){
+        Auth::logout();
+        return redirect('/admin');
+    }
+
+   
+
 }
+

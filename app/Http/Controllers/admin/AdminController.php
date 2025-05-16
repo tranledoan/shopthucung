@@ -18,6 +18,7 @@ class AdminController extends Controller
     public function index(){
         return view('admin_login');
     }
+
     public function dashboard(){
         $getOrderView = $this->AdminRepository->getOrderView();
         $totalsCustomer = $this->AdminRepository->totalsCustomer();
@@ -34,4 +35,12 @@ class AdminController extends Controller
         ]);
     }
    
+
+    public function signin_dashboard(Request $request){
+        return $this->AdminRepository->signIn($request);
+    }
+    public function admin_logout(){
+        return $this->AdminRepository->logOut();
+    }
+
 }
