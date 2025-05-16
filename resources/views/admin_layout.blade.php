@@ -46,6 +46,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="#" class="nav-link" onclick="loadPage('danhmucs')">
+              <i class="nav-icon fas fa-paw"></i>
+              <p>Danh mục</p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="#" class="nav-link" onclick="loadPage('products')">
               <i class="nav-icon fas fa-paw"></i>
               <p>Sản phẩm</p>
