@@ -112,3 +112,4 @@ Route::get('/admin/orders/edit/{orders}', [OrderController::class, 'edit'])->nam
 Route::put('/admin/orders/update/{orders}', [OrderController::class, 'update'])->name('orders.update');
 
 
+Route::get('/admin/user/search', [UserController::class, 'search'])->name('adminSearchUser');
