@@ -56,10 +56,6 @@
 
         <a href="{{ route('product.edit', ['product' => $product]) }}" class="btn btn-warning mb-2">Edit</a>
         <form method="post" action="{{route('product.destroy', ['product' => $product])}}">
-
-        <a href="" class="btn btn-warning mb-2">Edit</a>
-        <form method="post" action="">
-
             @csrf
             @method('delete')
             <input type="submit" class="btn btn-danger" value="Delete"
