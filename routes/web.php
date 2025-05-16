@@ -5,7 +5,9 @@ use App\Http\Controllers\OrderViewController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
 
-
+    AdminController,
+    DanhmucController,
+    ProductController,
     HomeController,
     CartController
 };
@@ -62,4 +64,28 @@ Route::get('/donhang', [OrderViewController:: class, 'donhang']);
 
 Route::prefix('/')->middleware('orderview')->group(function(){
     Route::get('/donhang/edit/{id}', [OrderViewController::class, 'edit'])->name('donhang.edit');
+});
+
+//admin
+Route::prefix('/')->middleware('admin.login')->group(function(){
+    //login
+    Route::get('/dashboard', [AdminController:: class, 'dashboard']);
+    Route::get('/admin_logout', [AdminController:: class, 'admin_logout']); 
+    
+    //product
+    Route::get('/admin/products', [ProductController:: class, 'index'])->name('product.index');
+    Route::get('/admin/products/search', [AdminController:: class, 'search'])->name('adminSearch');
+    Route::get('/admin/products/create', [ProductController:: class, 'create'])->name('product.create');
+    Route::post('/admin/products', [ProductController::class, 'store'])->name('product.store');
+    Route::get('/admin/products/edit/{product}', [ProductController::class, 'edit'])->name('product.edit');
+    Route::put('/admin/products/update/{product}', [ProductController::class, 'update'])->name('product.update');
+    Route::delete('/admin/products/{product}/destroy', [ProductController::class, 'destroy'])->name('product.destroy');
+    
+    //catagory
+    Route::get('/admin/danhmuc', [DanhmucController::class, 'index'])->name('danhmuc.index');
+    Route::get('/admin/danhmuc/create', [DanhmucController:: class, 'create'])->name('danhmuc.create');
+    Route::post('/admin/danhmuc', [DanhmucController::class, 'store'])->name('danhmuc.store');
+    Route::get('/admin/danhmuc/edit/{danhmuc}', [DanhmucController::class, 'edit'])->name('danhmuc.edit');
+    Route::put('/admin/danhmuc/update/{danhmuc}', [DanhmucController::class, 'update'])->name('danhmuc.update');
+    Route::delete('/admin/danhmuc/{danhmuc}/destroy', [DanhmucController::class, 'destroy'])->name('danhmuc.destroy');
 });
