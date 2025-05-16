@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderViewController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\DanhmucController;
 use App\Http\Controllers\{
@@ -69,15 +70,12 @@ Route::prefix('/')->middleware('orderview')->group(function(){
 });
 
 //admin
-
-Route::prefix('admin')->group(function () {
-    Route::resource('products', ProductController::class); 
-});
    //login
+   
     Route::prefix('/')->group(function() {
-      //product
+      
 
-    Route::get('/admin/products', [ProductController:: class, 'index'])->name('product.index');
+    Route::get('/admin/products', [ProductController::class, 'index'])->name('product.index');
     Route::get('/admin/products/search', [AdminController:: class, 'search'])->name('adminSearch');
     Route::get('/admin/products/create', [ProductController:: class, 'create'])->name('product.create');
     Route::post('/admin/products', [ProductController::class, 'store'])->name('product.store');
@@ -94,4 +92,9 @@ Route::prefix('admin')->group(function () {
     Route::delete('/admin/danhmucs/{danhmuc}/destroy', [DanhmucController::class, 'destroy'])->name('danhmuc.destroy');
    
     });
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/products', [ProductController:: class, 'index'])->name('product.index');
+    //product
+});
     

@@ -65,7 +65,7 @@
 
         <div>
             <input type="submit" class="btn btn-primary" value="Update">
-            &nbsp;<a class="btn btn-secondary" href="{{URL::to('/admin/product')}}">Hủy</a>
+            &nbsp;<a class="btn btn-secondary" href="{{URL::to('/admin/products')}}">Hủy</a>
         </div>
     </form>
 

@@ -40,31 +40,31 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" role="menu">
           <li class="nav-item">
-            <a href="#" class="nav-link active" onclick="loadPage('dashboard')">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+            <a href="{{ route('admin.dashboard') }}" class="nav-link active" >
+              <i class="nav-icon fas fa-tachometer-alt" data-feather="sliders"></i>
               <p>Dashboard</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" onclick="loadPage('danhmucs')">
+            <a href="{{ route('danhmuc.index') }}" class="nav-link">
               <i class="nav-icon fas fa-paw"></i>
               <p>Danh mục</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" onclick="loadPage('products')">
+           <a href="{{ route('product.index') }}" class="nav-link" >
               <i class="nav-icon fas fa-paw"></i>
-              <p>Sản phẩm</p>
+                <p>Sản phẩm</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" onclick="loadPage('orders')">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-shopping-cart"></i>
               <p>Đơn hàng</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" onclick="loadPage('users')">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>Người dùng</p>
             </a>
@@ -81,10 +81,10 @@
         <h1 class="m-0">Trang Admin</h1>
       </div>
     </div>
-
     <section class="content">
       <div class="container-fluid" id="main-content">
         <p>Chào mừng bạn đến với trang quản trị Pet Shop!</p>
+        @yield('admin_content')
       </div>
     </section>
   </div>
@@ -107,16 +107,7 @@
     window.location.href = "login.html";
   }
 
-  function loadPage(page) {
-    const content = {
-      dashboard: "<h2>Dashboard</h2><p>Thông tin tổng quan về cửa hàng thú cưng.</p>",
-      products: "<h2>Sản phẩm</h2><p>Danh sách các sản phẩm thú cưng.</p>",
-      orders: "<h2>Đơn hàng</h2><p>Quản lý đơn hàng của khách hàng.</p>",
-      users: "<h2>Người dùng</h2><p>Danh sách tài khoản người dùng.</p>"
-    };
-
-    document.getElementById("main-content").innerHTML = content[page] || "<p>Không tìm thấy nội dung.</p>";
-  }
+  
 </script>
 </body>
 </html>
