@@ -34,7 +34,14 @@ class SanphamRepository implements ISanphamRepository{
     {
         return Sanpham::where('id_danhmuc', 7)->orderBy('id_sanpham', 'desc')->take(5)->get();
     }
-    public function searchProduct($data)
+ 
+    // xem them
+     public function viewAllWithPagi()
+    {
+        return Sanpham::paginate(10);
+    }
+    // tim kiem 
+     public function searchProduct($data)
     {
         $searchKeyword = $data->input('tukhoa');
         return Sanpham::where('tensp', 'like', '%' . $searchKeyword . '%')->paginate(5);
