@@ -86,5 +86,10 @@ Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.das
   Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders.index');
   
   Route::get('/admin/khachhang', [UserController::class, 'index'])->name('khachhang.index');
-  
-  
+   Route::get('/admin/product/search', [AdminController::class, 'search'])->name('adminSearch');
+   Route::get('/admin/product/create', [ProductController::class, 'create'])->name('product.create');
+  Route::delete('/admin/product/{product}/destroy', [ProductController::class, 'destroy'])->name('product.destroy');
+   Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders.index');
+  Route::get('/admin/orders/edit/{orders}', [OrderController::class, 'edit'])->name('orders.edit');
+  Route::put('/admin/orders/update/{orders}', [OrderController::class, 'update'])->name('orders.update');
+

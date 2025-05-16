@@ -40,4 +40,19 @@
       @endforeach
     </tbody>
   </table>
+  <nav aria-label="Page navigation example">
+  <ul class="pagination">
+      <li class="page-item @if($Danhmucs->currentPage() === 1) disabled @endif">
+          <a class="page-link" href="{{ $Danhmucs->previousPageUrl() }}">Previous</a>
+      </li>
+      @for ($i = 1; $i <= $Danhmucs->lastPage(); $i++)
+          <li class="page-item @if($Danhmucs->currentPage() === $i) active @endif">
+              <a class="page-link" href="{{ $Danhmucs->url($i) }}">{{ $i }}</a>
+          </li>
+      @endfor
+      <li class="page-item @if($Danhmucs->currentPage() === $Danhmucs->lastPage()) disabled @endif">
+          <a class="page-link" href="{{ $Danhmucs->nextPageUrl() }}">Next</a>
+      </li>
+  </ul>
+</nav>
 @endsection
