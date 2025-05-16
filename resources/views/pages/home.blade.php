@@ -191,7 +191,7 @@
 
                         <div class="product__content">
                             <div class="product__title">
-                                {{$sanpham->tensp}}
+                                AAAAAA
                             </div>
 
                             <div class="product__pride-oldPride">
@@ -206,7 +206,7 @@
                             <div class="product__pride-newPride">
                                 <span class="Price">
                                     <bdi>
-                                        {{$sanpham->giasp}}
+                                        50000000
                                         <span class="currencySymbol">₫</span>
                                     </bdi>
                                 </span>
@@ -235,7 +235,7 @@
 
                         <div class="product__content">
                             <div class="product__title">
-                                {{$sanpham->tensp}}
+                                AAAAAAAAA
                             </div>
 
                             <div class="product__pride-oldPride">
@@ -250,7 +250,7 @@
                             <div class="product__pride-newPride">
                                 <span class="Price">
                                     <bdi>
-                                        {{$sanpham->giasp}}
+                                        4000000
                                         <span class="currencySymbol">₫</span>
                                     </bdi>
                                 </span>
@@ -350,7 +350,7 @@
 
                         <div class="product__content">
                             <div class="product__title">
-                                {{$sanpham->tensp}}
+                                AAAAAAAAA
                             </div>
 
                             <div class="product__pride-oldPride">
@@ -365,7 +365,7 @@
                             <div class="product__pride-newPride">
                                 <span class="Price">
                                     <bdi>
-                                        {{$sanpham->giasp}}
+                                        4000000
                                         <span class="currencySymbol">₫</span>
                                     </bdi>
                                 </span>
@@ -395,7 +395,7 @@
 
                         <div class="product__content">
                             <div class="product__title">
-                                {{$sanpham->tensp}}
+                               AAAAAAAA
                             </div>
 
                             <div class="product__pride-oldPride">
@@ -410,7 +410,7 @@
                             <div class="product__pride-newPride">
                                 <span class="Price">
                                     <bdi>
-                                        {{$sanpham->giasp}}
+                                        300000000
                                         <span class="currencySymbol">₫</span>
                                     </bdi>
                                 </span>
