@@ -14,13 +14,33 @@ class UserController extends Controller
 
     private $UserRepository;
 
-    public function __construct(IUserRepository $UserRepository) {
+    public function __construct(IUserRepository $UserRepository)
+    {
         $this->UserRepository = $UserRepository;
     }
 
-    public function index(){
-        $Khachhangs = $this->UserRepository->allKhachhang();
+    public function index(Request $request)
+    {
+        // $Khachhangs = $this->UserRepository->allKhachhang();
 
-        return view('admin.khachhangs.index', ['Khachhangs' => $Khachhangs]);
+        // return view('admin.khachhangs.index', ['Khachhangs' => $Khachhangs]);
+        $keyword = $request->input('tukhoa');
+
+        $Khachhangs = $this->UserRepository->allKhachhang($keyword);
+
+        return view('admin.khachhangs.index', [
+            'Khachhangs' => $Khachhangs,
+            'keyword' => $keyword
+        ]);
+    }
+    public function search(Request $request)
+    {
+        $tukhoa = $request->tukhoa;
+        $searchs = Khachhang::where('hoten', 'like', "%$tukhoa%")
+            ->orWhere('email', 'like', "%$tukhoa%")
+            ->orWhere('sdt', 'like', "%$tukhoa%")
+            ->paginate(10);
+
+        return view('admin.khachhangs.search', compact('searchs', 'tukhoa'));
     }
 }

@@ -93,3 +93,4 @@ Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.das
   Route::get('/admin/orders/edit/{orders}', [OrderController::class, 'edit'])->name('orders.edit');
   Route::put('/admin/orders/update/{orders}', [OrderController::class, 'update'])->name('orders.update');
 
+Route::get('/admin/user/search', [UserController::class, 'search'])->name('adminSearchUser');

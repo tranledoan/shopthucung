@@ -10,6 +10,12 @@
       </div>
   @endif
 </div>
+  <form action="{{Route('adminSearchUser')}}" method="GET" class="d-flex">
+      <input type="text" value="{{ request('tukhoa') }}" placeholder="Nhập để tìm kiếm..." name="tukhoa" class="form-control" style="width: unset;" required>
+      <button class="btn btn-primary" type="submit">
+        <i class="align-middle" data-feather="search"></i> 
+      </button>
+  </form>
 
   <table class="table">
     <thead>
