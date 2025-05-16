@@ -9,10 +9,14 @@ use App\Http\Controllers\{
 
 
 
+
   HomeController,
   CartController
 };
 use App\Http\Controllers\admin\{AdminController, ProductController, DanhmucController, OrderController, UserController};
+
+
+
 Route::get('/', function () {
   return view('layout');
 })->name('home');
@@ -68,6 +72,38 @@ Route::prefix('/')->middleware('orderview')->group(function () {
 });
 
 
+
+//admin
+   //login
+   
+    Route::prefix('/')->group(function() {
+      
+
+    Route::get('/admin/products', [ProductController::class, 'index'])->name('product.index');
+    Route::get('/admin/products/search', [AdminController:: class, 'search'])->name('adminSearch');
+    Route::get('/admin/products/create', [ProductController:: class, 'create'])->name('product.create');
+    Route::post('/admin/products', [ProductController::class, 'store'])->name('product.store');
+    Route::get('/admin/products/edit/{product}', [ProductController::class, 'edit'])->name('product.edit');
+    Route::put('/admin/products/update/{product}', [ProductController::class, 'update'])->name('product.update');
+    Route::delete('/admin/products/{product}/destroy', [ProductController::class, 'destroy'])->name('product.destroy');
+    
+    //catagory
+    Route::get('/admin/danhmucs', [DanhmucController::class, 'index'])->name('danhmuc.index');
+    Route::get('/admin/danhmucs/create', [DanhmucController:: class, 'create'])->name('danhmuc.create');
+    Route::post('/admin/danhmucs', [DanhmucController::class, 'store'])->name('danhmuc.store');
+    Route::get('/admin/danhmucs/edit/{danhmuc}', [DanhmucController::class, 'edit'])->name('danhmuc.edit');
+    Route::put('/admin/danhmucs/update/{danhmuc}', [DanhmucController::class, 'update'])->name('danhmuc.update');
+    Route::delete('/admin/danhmucs/{danhmuc}/destroy', [DanhmucController::class, 'destroy'])->name('danhmuc.destroy');
+   
+    });
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/products', [ProductController:: class, 'index'])->name('product.index');
+    //product
+});
+    
+
+
 Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
 
@@ -113,3 +149,4 @@ Route::put('/admin/orders/update/{orders}', [OrderController::class, 'update'])-
 
 
 Route::get('/admin/user/search', [UserController::class, 'search'])->name('adminSearchUser');
+

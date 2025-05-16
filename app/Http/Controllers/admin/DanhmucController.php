@@ -17,6 +17,11 @@ class DanhmucController extends Controller
         $this->DanhmucRepository = $DanhmucRepository;
     }
 
+    //  public function index()
+    // {
+    //     $Danhmucs = Danhmuc::all();
+    //     return view('admin.danhmuc.index', compact('Danhmucs'));
+    // }
     public function index(){
         $Danhmucs = $this->DanhmucRepository->allDanhmuc();
 

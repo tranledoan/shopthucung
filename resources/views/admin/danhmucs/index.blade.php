@@ -3,6 +3,7 @@
 
 <h1 class="h3 mb-3"><strong>Danh sách danh mục</strong></h1>
 
+
 <div class="">
   @if(session()->has('success'))
       <div class="alert alert-success mb-3">

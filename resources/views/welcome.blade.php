@@ -14,7 +14,8 @@
     
         <link rel="stylesheet" href="{{ asset('frontend/css/bsgrid.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('frontend/css/style.min.css') }}" />
-    
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" />
 </head>
 <body>
