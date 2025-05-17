@@ -73,9 +73,10 @@ Route::prefix('/')->middleware('orderview')->group(function(){
 
 //admin
    //login
-   
+    
     Route::prefix('/')->group(function() {
-      
+    Route::get('/admin', [AdminController:: class, 'index']);
+    Route::post('/signinDashboard', [AdminController:: class, 'signin_dashboard']);
 
     Route::get('/admin/products', [ProductController::class, 'index'])->name('product.index');
     Route::get('/admin/products/search', [AdminController:: class, 'search'])->name('adminSearch');
