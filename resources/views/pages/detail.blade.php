@@ -13,19 +13,12 @@
                     <div class="big-img">
                         <img src="{{ asset($sanpham->anhsp) }}" alt="" id="zoom" style="visibility: visible;">
                     </div>
-                    {{-- <div class="small-img d-flex mt-2">
-                            <img src="./img/dohop.jpg" onerror="this.onerror=null; this.src='https://i.pinimg.com/originals/ae/4c/9e/ae4c9ea2edf887f6ad1e4e63cfae05b0.jpg'" class="small-imgg" alt="">
-                            <img src="./img/dohop.jpg" onerror="this.onerror=null; this.src='https://i.pinimg.com/originals/ae/4c/9e/ae4c9ea2edf887f6ad1e4e63cfae05b0.jpg'" class="small-imgg" alt="">
-                            <img src="./img/dohop.jpg" onerror="this.onerror=null; this.src='https://i.pinimg.com/originals/ae/4c/9e/ae4c9ea2edf887f6ad1e4e63cfae05b0.jpg'" class="small-imgg" alt="">
-                            <img src="./img/dohop.jpg" onerror="this.onerror=null; this.src='https://i.pinimg.com/originals/ae/4c/9e/ae4c9ea2edf887f6ad1e4e63cfae05b0.jpg'" class="small-imgg" alt="">
-                    </div> --}}
                 </div>
     
                 <div class="product__details-info">
                     <h3 style="margin-top: unset; line-height: unset;">{{ $sanpham->tensp }}</h3>
                     <div class="short-des">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam sit aliquid debitis voluptates ducimus, quasi iusto nam quaerat eius quidem.
-    
+                            {{ $sanpham->mota }}
                     </div><hr />
     
                     <div class="product__pride">
@@ -48,16 +41,6 @@
                     </div>
     
                     <form action="" method="POST">
-                        <!--
-                            <div class="number">
-                                <span>Số lượng</span>
-                                <div class="number__count">
-                                    <input type="number" value="1" min="1" max="10" name="quantity">
-                                    <input type="hidden" name="id" value="<?php //echo $valueID['id_sanpham']; ?>">
-                                </div>
-                            </div>
-                        -->
-    
                         <div class="number">
                             <span>
                                 Số lượng

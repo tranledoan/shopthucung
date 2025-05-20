@@ -19,13 +19,17 @@
                     <div class="form-group">
                         <label for="Fullname" class="form-label">Nhập email</label>
                         <input type="email" name="email" class="form-control">
-                        <span class="form-message"></span>
+                        @error('email')
+        <small class="text-danger">{{ $message }}</small>
+    @enderror
                     </div>
     
                     <div class="form-group">
                         <label for="password" class="form-label">Mật khẩu</label>
                         <input type="password" name="password" class="form-control">
-                        <span class="form-message"></span>
+                        @error('password')
+        <small class="text-danger">{{ $message }}</small>
+    @enderror
                     </div>
     
                     
