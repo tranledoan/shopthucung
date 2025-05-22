@@ -101,4 +101,8 @@ class Dathang extends Model
     // Functions ...
 
     // Relations ...
+    public function khachhang()
+{
+    return $this->belongsTo(Khachhang::class, 'id_kh');
+}
 }
