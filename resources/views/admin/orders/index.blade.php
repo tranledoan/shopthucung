@@ -17,6 +17,7 @@
     <thead>
       <tr>
         <th>ID</th>
+        <th>Tên tài khoản</th>
         <th>Phương thức tt</th>
         <th>Ngày đặt</th>
         <th>Ngày giao</th>
@@ -29,6 +30,7 @@
       @foreach($orders as $order)
       <tr>
         <td>{{$order->id_dathang}}</td>
+        <td class="d-none d-md-table-cell">{{ $order->khachhang->hoten ?? 'Không rõ' }}</td>
 
         @if ($order->phuongthucthanhtoan == "COD")
           <td class="d-none d-xl-table-cell"><div class="badge bg-secondary">{{$order->phuongthucthanhtoan}}</div></td>
