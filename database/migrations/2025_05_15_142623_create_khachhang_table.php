@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('diachi')->nullable();
             $table->integer('sdt')->nullable();
             $table->integer('id_phanquyen')->index('fk_dk');
+            $table->timestamps();
         });
     }
 

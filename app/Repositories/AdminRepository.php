@@ -38,6 +38,7 @@ class AdminRepository implements IAdminRepository{
     }
 
 
+
     public function getOrderView()
     {
         return Dathang::orderby('id_dathang', 'desc')->take(6)->get();
@@ -71,6 +72,16 @@ class AdminRepository implements IAdminRepository{
 
 
     
+
+
+
+
+
+
+   
+
+   
+
 
 
 
