@@ -14,68 +14,66 @@ class ProductController extends Controller
 
     private $productRepository;
 
-    public function __construct(IProductRepository $productRepository) {
+    public function __construct(IProductRepository $productRepository)
+    {
         $this->productRepository = $productRepository;
     }
 
-    public function index(){
+    public function index()
+    {
         $products = $this->productRepository->allProduct();
 
         return view('admin.products.index', ['products' => $products]);
     }
 
-    public function create(){
+    public function create()
+    {
         $list_danhmucs = Danhmuc::all();
         return view('admin.products.create', ['list_danhmucs' => $list_danhmucs]);
     }
 
-    public function store(Request $request){
-
+    public function store(Request $request)
+    {
         $validatedData = $request->validate([
             'tensp' => 'required',
-            'anhsp' => 'required',
+            'anhsp' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'giasp' => 'required|decimal:0,2',
             'mota' => 'nullable',
-            'giamgia' => 'nullable',
+            'giamgia' => 'nullable|numeric|min:0|max:100',
             'giakhuyenmai' => 'nullable|decimal:0,2',
             'soluong' => 'required|numeric',
             'id_danhmuc' => 'required'
         ]);
 
-        // Lưu hình ảnh vào thư mục frontend/uploads
-        $imagePath = $request->file('anhsp')->store('upload', 'public_frontend');
-        
-        // Lấy tên file hình ảnh
-        $imageName = pathinfo($imagePath, PATHINFO_FILENAME);
+        // Xử lý upload hình ảnh
+        if ($request->hasFile('anhsp')) {
+            $file = $request->file('anhsp');
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('frontend/upload'), $filename);
+            $validatedData['anhsp'] = 'frontend/upload/' . $filename;
+        }
 
-        // Lấy đuôi file hình ảnh
-        $imageExtension = $request->file('anhsp')->getClientOriginalExtension();
-
-        // Tạo đường dẫn đầy đủ cho hình ảnh
-        $imageUrl = "frontend/upload/{$imageName}.{$imageExtension}";
-
-        // Thêm đường dẫn hình ảnh vào dữ liệu được xác nhận
-        $validatedData['anhsp'] = $imageUrl;
-
-        //tinh giam gia
+        // Tính giá khuyến mãi nếu có giảm giá
         $giagoc = $validatedData['giasp'];
-        $giamgia = $validatedData['giamgia'];
-
+        $giamgia = $validatedData['giamgia'] ?? 0;
         $tinh = ($giagoc * $giamgia) / 100;
         $validatedData['giakhuyenmai'] = $giagoc - $tinh;
 
+        // Lưu sản phẩm
         $this->productRepository->storeProduct($validatedData);
 
-        return redirect()->route('product.index');
+        return redirect()->route('product.index')->with('success', 'Thêm sản phẩm thành công!');
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $list_danhmucs = Danhmuc::all();
         $product = $this->productRepository->findProduct($id);
         return view('admin.products.edit', ['product' => $product, 'list_danhmucs' => $list_danhmucs]);
     }
 
-    public function update($id, Request $request){
+    public function update($id, Request $request)
+    {
         $validatedData = $request->validate([
             'tensp' => 'required',
             'anhsp' => 'nullable',
@@ -88,9 +86,9 @@ class ProductController extends Controller
         ]);
 
         // Lưu hình ảnh vào thư mục frontend/uploads
-        if($request->file('anhsp')){
+        if ($request->file('anhsp')) {
             $imagePath = $request->file('anhsp')->store('upload', 'public_frontend');
-            
+
             // Lấy tên file hình ảnh
             $imageName = pathinfo($imagePath, PATHINFO_FILENAME);
 
@@ -98,13 +96,11 @@ class ProductController extends Controller
             $imageExtension = $request->file('anhsp')->getClientOriginalExtension();
 
             // Tạo đường dẫn đầy đủ cho hình ảnh
-            $imageUrl = "frontend/upload/{$imageName}.{$imageExtension}";
-
-        }
-        else{
+            $imageUrl = 'frontend_storage/upload/' . $imageName;
+        } else {
             $imageUrl = $request->anhsp1;
         }
-        
+
         // Thêm đường dẫn hình ảnh vào dữ liệu được xác nhận
         $validatedData['anhsp'] = $imageUrl;
 
@@ -120,10 +116,10 @@ class ProductController extends Controller
         return redirect()->route('product.index')->with('success', 'Cập nhập sản phẩm thành công');
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $this->productRepository->deleteProduct($id);
 
         return redirect()->route('product.index')->with('success', 'Xóa sản phẩm thành công');
     }
-
 }

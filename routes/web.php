@@ -4,7 +4,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderViewController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\File;
 use App\Http\Controllers\{
 
 
@@ -150,3 +150,15 @@ Route::put('/admin/orders/update/{orders}', [OrderController::class, 'update'])-
 
 Route::get('/admin/user/search', [UserController::class, 'search'])->name('adminSearchUser');
 
+Route::get('frontend/upload/{filename}', function ($filename) {
+    $path = public_path('frontend/upload/' . $filename);
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    return response($file, 200)->header("Content-Type", $type);
+});
