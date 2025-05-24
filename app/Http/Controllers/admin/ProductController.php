@@ -49,8 +49,8 @@ class ProductController extends Controller
         if ($request->hasFile('anhsp')) {
             $file = $request->file('anhsp');
             $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('frontend/upload'), $filename);
-            $validatedData['anhsp'] = 'frontend/upload/' . $filename;
+            $file->move(public_path('frontend_storage/upload'), $filename);
+            $validatedData['anhsp'] = 'frontend_storage/upload/' . $filename;
         }
 
         // Tính giá khuyến mãi nếu có giảm giá
@@ -86,23 +86,12 @@ class ProductController extends Controller
         ]);
 
         // Lưu hình ảnh vào thư mục frontend/uploads
-        if ($request->file('anhsp')) {
-            $imagePath = $request->file('anhsp')->store('upload', 'public_frontend');
-
-            // Lấy tên file hình ảnh
-            $imageName = pathinfo($imagePath, PATHINFO_FILENAME);
-
-            // Lấy đuôi file hình ảnh
-            $imageExtension = $request->file('anhsp')->getClientOriginalExtension();
-
-            // Tạo đường dẫn đầy đủ cho hình ảnh
-            $imageUrl = 'frontend_storage/upload/' . $imageName;
-        } else {
-            $imageUrl = $request->anhsp1;
+         if ($request->hasFile('anhsp')) {
+            $file = $request->file('anhsp');
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('frontend_storage/upload'), $filename);
+            $validatedData['anhsp'] = 'frontend_storage/upload/' . $filename;
         }
-
-        // Thêm đường dẫn hình ảnh vào dữ liệu được xác nhận
-        $validatedData['anhsp'] = $imageUrl;
 
         //tinh giam gia
         $giagoc = $validatedData['giasp'];
