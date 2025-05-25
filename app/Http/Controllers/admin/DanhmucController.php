@@ -13,7 +13,8 @@ class DanhmucController extends Controller
 
     private $DanhmucRepository;
 
-    public function __construct(IDanhmucRepository $DanhmucRepository) {
+    public function __construct(IDanhmucRepository $DanhmucRepository)
+    {
         $this->DanhmucRepository = $DanhmucRepository;
     }
 
@@ -22,17 +23,35 @@ class DanhmucController extends Controller
     //     $Danhmucs = Danhmuc::all();
     //     return view('admin.danhmuc.index', compact('Danhmucs'));
     // }
-    public function index(){
+    public function index(Request $request)
+    {
+        // Lấy phân trang danh mục (ví dụ 10 bản ghi/trang)
         $Danhmucs = $this->DanhmucRepository->allDanhmuc();
 
+        $currentPage = $Danhmucs->currentPage();
+        $lastPage = $Danhmucs->lastPage();
+
+        $pageParam = $request->query('page');
+
+        // Kiểm tra page truyền vào có hợp lệ không
+        if (!is_null($pageParam) && (!ctype_digit($pageParam) || (int) $pageParam > $lastPage)) {
+            // Chuyển hướng về trang cuối hợp lệ, kèm thông báo lỗi
+            return redirect()->route('danhmuc.index', ['page' => $lastPage])
+                ->with('error', 'Trang không hợp lệ, đã chuyển về trang hợp lệ gần nhất.');
+        }
+
+        // Trả về view với dữ liệu phân trang
         return view('admin.danhmucs.index', ['Danhmucs' => $Danhmucs]);
     }
 
-    public function create(){
+
+    public function create()
+    {
         return view('admin.danhmucs.create');
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
         $validatedData = $request->validate([
             'ten_danhmuc' => 'required',
@@ -43,12 +62,14 @@ class DanhmucController extends Controller
         return redirect()->route('danhmuc.index');
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $danhmuc = $this->DanhmucRepository->findDanhmuc($id);
         return view('admin.danhmucs.edit', ['danhmuc' => $danhmuc]);
     }
 
-    public function update($id, Request $request){
+    public function update($id, Request $request)
+    {
         $validatedData = $request->validate([
             'ten_danhmuc' => 'required',
         ]);
@@ -57,7 +78,8 @@ class DanhmucController extends Controller
         return redirect()->route('danhmuc.index')->with('success', 'Cập nhập danh mục thành công');
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $this->DanhmucRepository->deleteDanhmuc($id);
 
         return redirect()->route('danhmuc.index')->with('success', 'Xóa danh mục thành công');
