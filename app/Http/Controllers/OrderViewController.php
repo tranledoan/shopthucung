@@ -36,4 +36,18 @@ class OrderViewController extends Controller
         return view('pages.donhangdetail', ['order' => $order, 'orderdetails' => $orderdetails, 'showusers' => $showusers]);
     }
 
+    public function update(Request $request, $id) {
+        $order = $this->OrderRepository->findOrder($id);
+        
+        if ($order->trangthai == 'đang xử lý') {
+            $this->OrderRepository->updateOrder($id, [
+                'trangthai' => $request->trangthai,
+                'ngaygiaohang' => $request->ngaygiaohang
+            ]);
+            return redirect()->back()->with('success', 'Cập nhật đơn hàng thành công');
+        }
+        
+        return redirect()->back()->with('error', 'Không thể cập nhật đơn hàng này');
+    }
+
 }
