@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Sanpham;
 use App\Models\Danhmuc;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\Repositories\IProductRepository;
 
@@ -104,11 +105,16 @@ class ProductController extends Controller
 
         return redirect()->route('product.index')->with('success', 'Cập nhập sản phẩm thành công');
     }
-
     public function destroy($id)
     {
-        $this->productRepository->deleteProduct($id);
+        try {
+            $item = Sanpham::findOrFail($id);
+            $item->delete();
 
-        return redirect()->route('product.index')->with('success', 'Xóa sản phẩm thành công');
+            return redirect()->back()->with('success', 'Xóa thành công.');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->back()->with('error', 'Bản ghi không tồn tại hoặc đã bị xóa.');
+        }
     }
+
 }
