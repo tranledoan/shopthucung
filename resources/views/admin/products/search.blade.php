@@ -27,6 +27,13 @@
         </tr>
     </thead>
     <tbody>
+    @if($searchs->isEmpty())
+        <tr>
+            <td colspan="6" class="text-center" style="color: red; font-weight: bold;">
+                Không tìm thấy sản phẩm nào với từ khóa "{{ $tukhoa }}"
+            </td>
+        </tr>
+    @else
         @foreach ($searchs as $product)
             <tr>
                 <td>{{$product->tensp}}</td>
@@ -44,7 +51,9 @@
                 </td>
             </tr>
         @endforeach
-    </tbody>
+    @endif
+</tbody>
+
 </table>
 
 @endsection

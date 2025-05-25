@@ -20,12 +20,23 @@ class ProductController extends Controller
         $this->productRepository = $productRepository;
     }
 
-    public function index()
-    {
-        $products = $this->productRepository->allProduct();
+   public function index(Request $request)
+{
+    $products = $this->productRepository->allProduct();
 
-        return view('admin.products.index', ['products' => $products]);
+    // Kiểm tra số trang hợp lệ
+    $currentPage = $products->currentPage();
+    $lastPage = $products->lastPage();
+
+    // Nếu `page` truyền vào không hợp lệ (chữ) hoặc vượt quá `lastPage`
+    $pageParam = $request->query('page');
+    if (!is_null($pageParam) && (!ctype_digit($pageParam) || $pageParam > $lastPage)) {
+        return redirect()->route('product.index', ['page' => $lastPage])
+                         ->with('error', 'Trang không hợp lệ, đã chuyển về trang hợp lệ gần nhất.');
     }
+
+    return view('admin.products.index', ['products' => $products]);
+}
 
     public function create()
     {

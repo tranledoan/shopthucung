@@ -96,9 +96,6 @@
                     <span class="align-middle">Users</span>
                 </a>
             </li>
-        
-           
-
         </div>
       </nav>
 
@@ -145,7 +142,7 @@
                     Help Center</a
                   >
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{{ URL::to('/admin_logout')}}"><i class="align-middle me-2" data-feather="log-out"></i> <span class="align-middle">log-out</span></a>
+                  <a class="dropdown-item" href="{{ URL::to('/')}}"><i class="align-middle me-2" data-feather="log-out"></i> <span class="align-middle">log-out</span></a>
                 </div>
               </li>
             </ul>

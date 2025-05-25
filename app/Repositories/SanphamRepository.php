@@ -4,7 +4,8 @@ namespace App\Repositories;
 use App\Repositories\ISanphamRepository;
 use App\Models\Sanpham;
 
-class SanphamRepository implements ISanphamRepository{
+class SanphamRepository implements ISanphamRepository
+{
 
     public function allProduct()
     {
@@ -34,14 +35,19 @@ class SanphamRepository implements ISanphamRepository{
     {
         return Sanpham::where('id_danhmuc', 7)->orderBy('id_sanpham', 'desc')->take(5)->get();
     }
- 
+
     // xem them
-     public function viewAllWithPagi()
+    public function viewAllWithPagi()
     {
+        $page = request()->query('page');
+        if (!is_null($page) && !ctype_digit($page)) {
+            abort(404);
+        }
+
         return Sanpham::paginate(10);
-    }
+    }   
     // tim kiem 
-     public function searchProduct($data)
+    public function searchProduct($data)
     {
         $searchKeyword = $data->input('tukhoa');
         return Sanpham::where('tensp', 'like', '%' . $searchKeyword . '%')->paginate(5);

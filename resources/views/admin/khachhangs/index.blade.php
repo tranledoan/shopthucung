@@ -10,6 +10,11 @@
       </div>
   @endif
 </div>
+@if(session('error'))
+    <div class="alert alert-warning">
+        {{ session('error') }}
+    </div>
+@endif
   <form action="{{Route('adminSearchUser')}}" method="GET" class="d-flex">
       <input type="text" value="{{ request('tukhoa') }}" placeholder="Nhập để tìm kiếm..." name="tukhoa" class="form-control" style="width: unset;" required>
       <button class="btn btn-primary" type="submit">
