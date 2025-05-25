@@ -38,14 +38,27 @@ class SanphamRepository implements ISanphamRepository
 
     // xem them
     public function viewAllWithPagi()
-    {
-        $page = request()->query('page');
-        if (!is_null($page) && !ctype_digit($page)) {
-            abort(404);
-        }
+{
+    $page = request()->query('page');
 
-        return Sanpham::paginate(10);
-    }   
+    // Nếu không phải số dương → abort
+    if (!is_null($page) && (!ctype_digit($page) || (int)$page < 1)) {
+        abort(404);
+    }
+
+    $sanphams = Sanpham::paginate(10);
+
+    // Nếu người dùng truy cập vượt quá trang cuối cùng
+    if ($sanphams->currentPage() > $sanphams->lastPage() && $sanphams->lastPage() > 0) {
+        // Chuyển về trang gần nhất và báo lỗi
+        return redirect()
+            ->route('viewAll', ['page' => $sanphams->lastPage()])
+            ->with('error', 'Trang không tồn tại. Đã chuyển đến trang gần nhất.');
+    }
+
+    return $sanphams;
+}
+ 
     // tim kiem 
     public function searchProduct($data)
     {

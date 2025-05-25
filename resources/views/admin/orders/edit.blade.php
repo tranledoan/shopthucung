@@ -2,15 +2,7 @@
 @section('admin_content')
 <h1 class="h3 mb-3"><strong>Sửa đơn hàng</strong></h1>
 
-<div class="err">
-    @if($errors->any())
-        <ul>
-            @foreach($errors->all() as $error)
-                <li>{{$error}}</li>
-            @endforeach
-        </ul>
-    @endif
-</div>
+
 @if(session('error'))
     <div class="alert alert-danger">
         {{ session('error') }}
@@ -59,6 +51,9 @@
         @else
             <input type="date" class="form-control" id="ngaygiaohang" name="ngaygiaohang" value="{{ date('Y-m-d') }}">
         @endif
+        @error('ngaygiaohang')
+        <div class="text-danger mt-1">{{ $message }}</div>
+    @enderror
     </div>
 
     <div class="mb-3">
@@ -74,13 +69,25 @@
     </div>
 
     <div class="mb-3">
+
         <label for="trangthai" class="form-label">Trạng thái</label>
-         <select class="form-select" id="trangthai" name="trangthai" {{ $order->trangthai == 'Giao thành công' ? 'disabled' : '' }} required>
-        <option value="đang xử lý" {{ $order->trangthai == 'đang xử lý' ? 'selected' : '' }}>Đang xử lý</option>
-        <option value="chờ lấy hàng" {{ $order->trangthai == 'chờ lấy hàng' ? 'selected' : '' }}>Chờ lấy hàng</option>
-        <option value="đang giao hàng" {{ $order->trangthai == 'đang giao hàng' ? 'selected' : '' }}>Đang giao hàng</option>
-        <option value="giao thành công" {{ $order->trangthai == 'giao thành công' ? 'selected' : '' }}>Giao thành công</option>
-    </select>
+        <select class="form-select" id="trangthai" name="trangthai" {{ $order->trangthai == 'Giao thành công' ? 'disabled' : '' }} required>
+            <option value="đang xử lý" {{ $order->trangthai == 'đang xử lý' ? 'selected' : '' }}>Đang xử lý</option>
+            <option value="chờ lấy hàng" {{ $order->trangthai == 'chờ lấy hàng' ? 'selected' : '' }}>Chờ lấy hàng</option>
+            <option value="đang giao hàng" {{ $order->trangthai == 'đang giao hàng' ? 'selected' : '' }}>Đang giao hàng
+            </option>
+            <option value="giao thành công" {{ $order->trangthai == 'giao thành công' ? 'selected' : '' }}>Giao thành công
+            </option>
+        </select>
+        <div class="err">
+            @if($errors->any())
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{'Trang Thai Khong Hop Le'}}</li>
+                    @endforeach
+                </ul>
+            @endif
+        </div>
     </div>
 
     <div class="mb-3">
@@ -123,7 +130,7 @@
     </div>
 
 
-   
+
     @if($order->trangthai != 'giao thành công')
         <input type="submit" class="btn btn-primary" value="Update">
     @endif
