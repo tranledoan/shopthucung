@@ -10,6 +10,11 @@
         </div>
     @endif
 </div>
+@if(session('error'))
+    <div class="alert alert-warning">
+        {{ session('error') }}
+    </div>
+@endif
 
 <div class="d-flex justify-content-between">
 
