@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Sanpham;
 use App\Models\Danhmuc;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\Repositories\IProductRepository;
 
@@ -19,12 +20,23 @@ class ProductController extends Controller
         $this->productRepository = $productRepository;
     }
 
-    public function index()
-    {
-        $products = $this->productRepository->allProduct();
+   public function index(Request $request)
+{
+    $products = $this->productRepository->allProduct();
 
-        return view('admin.products.index', ['products' => $products]);
+    // Kiểm tra số trang hợp lệ
+    $currentPage = $products->currentPage();
+    $lastPage = $products->lastPage();
+
+    // Nếu `page` truyền vào không hợp lệ (chữ) hoặc vượt quá `lastPage`
+    $pageParam = $request->query('page');
+    if (!is_null($pageParam) && (!ctype_digit($pageParam) || $pageParam > $lastPage)) {
+        return redirect()->route('product.index', ['page' => $lastPage])
+                         ->with('error', 'Trang không hợp lệ, đã chuyển về trang hợp lệ gần nhất.');
     }
+
+    return view('admin.products.index', ['products' => $products]);
+}
 
     public function create()
     {
@@ -104,11 +116,16 @@ class ProductController extends Controller
 
         return redirect()->route('product.index')->with('success', 'Cập nhập sản phẩm thành công');
     }
-
     public function destroy($id)
     {
-        $this->productRepository->deleteProduct($id);
+        try {
+            $item = Sanpham::findOrFail($id);
+            $item->delete();
 
-        return redirect()->route('product.index')->with('success', 'Xóa sản phẩm thành công');
+            return redirect()->back()->with('success', 'Xóa thành công.');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->back()->with('error', 'Bản ghi không tồn tại hoặc đã bị xóa.');
+        }
     }
+
 }
