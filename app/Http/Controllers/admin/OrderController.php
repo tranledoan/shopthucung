@@ -13,55 +13,53 @@ class OrderController extends Controller
 
     private $OrderRepository;
 
-    public function __construct(IOrderRepository $OrderRepository) {
+    public function __construct(IOrderRepository $OrderRepository)
+    {
         $this->OrderRepository = $OrderRepository;
     }
 
-    public function index(){
+    public function index()
+    {
         $orders = $this->OrderRepository->allOrder();
         return view('admin.orders.index', ['orders' => $orders]);
     }
-  public function edit($id){
+    public function edit($id)
+    {
         $order = $this->OrderRepository->findOrder($id);
         $orderdetails = $this->OrderRepository->findDetailProduct($id);
         $showusers = $this->OrderRepository->findUser($id);
         return view('admin.orders.edit', ['order' => $order, 'orderdetails' => $orderdetails, 'showusers' => $showusers]);
     }
 
-    public function update($id, Request $request){
-    //    $validatedData = $request->validate([
-    //     'ngaygiaohang' => 'required',
-    //     'trangthai' => 'required',
-    //     'diachigiaohang' => 'required|string|max:255', 
-    // ]);
-    // $this->OrderRepository->updateOrder($validatedData, $id);
-
-    // return redirect()->route('orders.index')->with('success', 'Cập nhập đơn hàng thành công');
-    // }
-     // Lấy đơn hàng từ database
+    public function update($id, Request $request)
+{
+    // Lấy đơn hàng
     $order = Dathang::findOrFail($id);
 
-    // Nếu đơn hàng đã giao thành công rồi → không cho cập nhật
+    // Không cho chỉnh nếu đã giao thành công
     if ($order->trangthai === 'giao thành công') {
         return redirect()->route('orders.index')
-                         ->with('error', 'Đơn hàng đã giao thành công, không thể chỉnh sửa.');
+            ->with('error', 'Đơn hàng đã giao thành công, không thể chỉnh sửa.');
     }
 
-    // Tiếp tục cập nhật nếu hợp lệ
+    // Validate trước khi cập nhật
     $validatedData = $request->validate([
         'ngaygiaohang' => 'nullable|date',
-        'diachigiaohang' => 'required|string',
-        'trangthai' => 'required|string',
+        'diachigiaohang' => 'required|string|max:255',
+        'trangthai' => 'required|string|in:đang xử lý,chờ lấy hàng,đang giao hàng,giao thành công',
+        
     ]);
+     if ($request->ngaygiaohang && $request->ngaygiaohang < $order->ngaydathang) {
+        return redirect()->back()->withInput()->withErrors([
+            'ngaygiaohang' => 'Ngày giao hàng không được nhỏ hơn ngày đặt hàng.',
+        ]);
+    }
 
-    $order->update([
-        'ngaygiaohang' => $request->ngaygiaohang,
-        'diachigiaohang' => $request->diachigiaohang,
-        'trangthai' => $request->trangthai,
-    ]);
+    // Cập nhật dữ liệu
+    $order->update($validatedData);
 
     return redirect()->route('orders.index')->with('success', 'Cập nhật đơn hàng thành công.');
-    }
-   
+}
+
 
 }
