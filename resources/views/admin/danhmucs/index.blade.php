@@ -11,6 +11,11 @@
       </div>
   @endif
 </div>
+@if(session('error'))
+    <div class="alert alert-warning">
+        {{ session('error') }}
+    </div>
+@endif
 
 <a class="btn btn-primary" href="{{route('danhmuc.create')}}">Thêm danh mục</a>
 

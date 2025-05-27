@@ -4,7 +4,8 @@ namespace App\Repositories;
 use App\Repositories\ISanphamRepository;
 use App\Models\Sanpham;
 
-class SanphamRepository implements ISanphamRepository{
+class SanphamRepository implements ISanphamRepository
+{
 
     public function allProduct()
     {
@@ -34,14 +35,32 @@ class SanphamRepository implements ISanphamRepository{
     {
         return Sanpham::where('id_danhmuc', 7)->orderBy('id_sanpham', 'desc')->take(5)->get();
     }
- 
+
     // xem them
-     public function viewAllWithPagi()
-    {
-        return Sanpham::paginate(10);
+    public function viewAllWithPagi()
+{
+    $page = request()->query('page');
+
+    // Nếu không phải số dương → abort
+    if (!is_null($page) && (!ctype_digit($page) || (int)$page < 1)) {
+        abort(404);
     }
+
+    $sanphams = Sanpham::paginate(10);
+
+    // Nếu người dùng truy cập vượt quá trang cuối cùng
+    if ($sanphams->currentPage() > $sanphams->lastPage() && $sanphams->lastPage() > 0) {
+        // Chuyển về trang gần nhất và báo lỗi
+        return redirect()
+            ->route('viewAll', ['page' => $sanphams->lastPage()])
+            ->with('error', 'Trang không tồn tại. Đã chuyển đến trang gần nhất.');
+    }
+
+    return $sanphams;
+}
+ 
     // tim kiem 
-     public function searchProduct($data)
+    public function searchProduct($data)
     {
         $searchKeyword = $data->input('tukhoa');
         return Sanpham::where('tensp', 'like', '%' . $searchKeyword . '%')->paginate(5);

@@ -8,10 +8,15 @@
         </a>
         <h2 class="text-center">TẤT CẢ SẢN PHẨM</h2>
     </div>
-
+@if(session('error'))
+    <div class="alert alert-danger text-center">
+        {{ session('error') }}
+    </div>
+@endif
 
     <div>
         <div class="row">
+            @if ($sanphams->count() > 0)
             @foreach($sanphams as $sanpham)
                 <div class="col-lg-2_5 col-md-4 col-6 post2">
                     <a href="{{ route('detail', ['id' => $sanpham->id_sanpham]) }}">
@@ -56,6 +61,13 @@
                 </div>
 
             @endforeach
+            @else
+        <div class="col-12">
+            <p style="color: red; font-weight: bold; text-align: center;">
+                Không có sản phẩm nào ở trang {{ $sanphams->currentPage() }}.
+            </p>
+        </div>
+    @endif
 
         </div>
          <nav aria-label="Page navigation example">

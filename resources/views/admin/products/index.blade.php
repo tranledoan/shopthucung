@@ -1,3 +1,4 @@
+
 @extends('admin_layout')
 @section('admin_content')
 <h1 class="h3 mb-3"><strong>Danh sách sản phẩm</strong></h1>
@@ -9,6 +10,11 @@
         </div>
     @endif
 </div>
+@if(session('error'))
+    <div class="alert alert-warning">
+        {{ session('error') }}
+    </div>
+@endif
 
 <div class="d-flex justify-content-between">
 
