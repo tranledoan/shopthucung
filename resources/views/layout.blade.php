@@ -1,12 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý cửa hàng thú cưng</title>
-    <link rel="shortcut icon" type="image/png" href="{{ asset('frontend/img/logo.jpg')}}"/>
+    <link rel="shortcut icon" type="image/png" href="{{ asset('frontend/img/logo.jpg')}}" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
@@ -17,8 +17,9 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/style.min.css') }}" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" />
-<style>
-        html, body {
+    <style>
+        html,
+        body {
             height: 100%;
             margin: 0;
         }
@@ -34,6 +35,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <!-- HEADER -->
@@ -51,9 +53,9 @@
                         <li><a href="{{ URL::to('/congiong') }}">Con giống</a></li>
                         <li><a href="{{ URL::to('/services') }}">Dịch vụ</a></li>
                         <li><a href="{{ URL::to('/donhang') }}">Đơn hàng</a></li>
-                         @if (Auth::check() && Auth::user()->id_phanquyen == 1)
-    <li><a href="{{ URL::to('/dashboard') }}">Dashboard</a></li>
-@endif
+                        @if (Auth::check() && Auth::user()->id_phanquyen == 1)
+                            <li><a href="{{ URL::to('/dashboard') }}">Dashboard</a></li>
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -128,11 +130,23 @@
             <div class="footer__info-content">
                 <h3>Fanpage</h3>
                 <p>
-                    <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FC%25E1%25BB%25ADa-h%25C3%25A0ng-S%25E1%25BA%25A3n-ph%25E1%25BA%25A9m-D%25C3%25A0nh-cho-Th%25C3%25BA-C%25C6%25B0ng-100178969197228%2F%3Fref%3Dpages_you_manage&tabs=timeline&width=300px&height=150px&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+                    <iframe
+                        src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FC%25E1%25BB%25ADa-h%25C3%25A0ng-S%25E1%25BA%25A3n-ph%25E1%25BA%25A9m-D%25C3%25A0nh-cho-Th%25C3%25BA-C%25C6%25B0ng-100178969197228%2F%3Fref%3Dpages_you_manage&tabs=timeline&width=300px&height=150px&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
                         width="100%" height="150px" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
-                        allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+                        allowfullscreen="true"
+                        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
                     </iframe>
                 </p>
+            </div>
+            <div class="col-lg-3 col-md-4">
+                <div class="footer-newsletter">
+                    <h2 class="footer-wid-title text-white" style="text-align: center;">Map</h2>
+                </div>
+                <div class="footer-map">
+                    <iframe id="mapFrame" width="100%" height="260" frameborder="0" style="border:0;" allowfullscreen=""
+                        loading="lazy">
+                    </iframe>
+                </div>
             </div>
         </div>
 
@@ -174,5 +188,26 @@
     </script>
 
     <script src="{{ asset('frontend/script/script.js') }}"></script>
+    <script>
+   
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+
+      
+            var mapURL = `https://www.google.com/maps?q=${lat},${lon}&hl=vi&z=15&output=embed`;
+
+           
+            document.getElementById("mapFrame").src = mapURL;
+        }, function(error) {
+            console.error("Lỗi định vị:", error);
+            
+        });
+    } else {
+        alert("Trình duyệt của bạn không hỗ trợ định vị.");
+    }
+</script>
 </body>
+
 </html>
