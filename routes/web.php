@@ -122,6 +122,7 @@ Route::delete('/admin/danhmuc/{danhmuc}/destroy', [DanhmucController::class, 'de
 Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders.index');
 
 Route::get('/admin/khachhang', [UserController::class, 'index'])->name('khachhang.index');
+Route::delete('/admin/khachhang/{id}', [UserController::class, 'destroy'])->name('adminDeleteUser');
 
 
 //admin
@@ -138,7 +139,10 @@ Route::get('/admin/orders/edit/{orders}', [OrderController::class, 'edit'])->nam
 Route::put('/admin/orders/update/{orders}', [OrderController::class, 'update'])->name('orders.update');
 
 
+
+
 Route::get('/admin/user/search', [UserController::class, 'search'])->name('adminSearchUser');
+
 
 Route::get('frontend/upload/{filename}', function ($filename) {
     $path = public_path('frontend/upload/' . $filename);
