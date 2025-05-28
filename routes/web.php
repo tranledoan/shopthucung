@@ -156,3 +156,8 @@ Route::get('frontend/upload/{filename}', function ($filename) {
 
     return response($file, 200)->header("Content-Type", $type);
 });
+// Hiển thị form edit
+Route::get('/admin/khachhangs/{id}/edit', [UserController::class, 'editUser'])->name('adminEditUser');
+
+// Xử lý cập nhật
+Route::put('/admin/khachhangs/{id}', [UserController::class, 'updateUser'])->name('adminUpdateUser');
