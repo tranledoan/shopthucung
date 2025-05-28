@@ -53,4 +53,22 @@ class UserController extends Controller
 
         return view('admin.khachhangs.search', compact('searchs', 'tukhoa'));
     }
+   public function destroy($id)
+{
+    $khachhang = Khachhang::find($id);
+
+    if (!$khachhang) {
+        return redirect()->back()->with('error', 'User không tồn tại.');
+    }
+
+    if ($khachhang->id_phanquyen == 1) {
+        return redirect()->back()->with('error', 'Không thể xóa admin.');
+    }
+
+    $khachhang->delete();
+
+    return redirect()->back()->with('success', 'Xóa user thành công.');
+}
+
+
 }

@@ -59,7 +59,7 @@
         @else
           <td colspan="2">
             <a href="" class="btn btn-warning mb-2">Edit</a>
-            <form method="post" action="">
+            <form method="post" action="{{ route('adminDeleteUser', $khachhang->id_kh) }}">
                 @csrf
                 @method('delete')
                 <input type="submit" class="btn btn-danger" value="Delete"
