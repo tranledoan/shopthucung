@@ -71,18 +71,38 @@ class DanhmucController extends Controller
 
     public function edit($id)
     {
-        $danhmuc = $this->DanhmucRepository->findDanhmuc($id);
-        return view('admin.danhmucs.edit', ['danhmuc' => $danhmuc]);
+        // Lấy danh mục theo ID
+        $danhmuc = Danhmuc::findOrFail($id);
+
+        // Trả về view với danh mục và thông tin phiên bản
+        return view('admin.danhmucs.edit', [
+            'danhmuc' => $danhmuc,
+            'version' => $danhmuc->version, // Gửi thông tin version
+        ]);
+        // $danhmuc = $this->DanhmucRepository->findDanhmuc($id);
+        // return view('admin.danhmucs.edit', ['danhmuc' => $danhmuc]);
     }
 
-    public function update($id, Request $request)
+    public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'ten_danhmuc' => 'required',
-        ]);
-        $this->DanhmucRepository->updateDanhmuc($validatedData, $id);
+        // Lấy danh mục theo ID
+        $danhmuc = Danhmuc::findOrFail($id);
 
-        return redirect()->route('danhmuc.index')->with('success', 'Cập nhập danh mục thành công');
+        // Kiểm tra nếu phiên bản trong cơ sở dữ liệu không khớp với phiên bản mà người dùng gửi
+        if ($danhmuc->version != $request->input('version')) {
+            // Nếu không khớp, thông báo lỗi và yêu cầu tải lại trang
+            return redirect()->route('danhmuc.edit', $id)
+                ->with('error', 'Dữ liệu đã thay đổi, vui lòng tải lại trang trước khi cập nhật.');
+        }
+
+        // Cập nhật các trường dữ liệu mới
+        $danhmuc->update($request->all());
+
+        // Tăng phiên bản lên 1
+        $danhmuc->version += 1;
+        $danhmuc->save();
+
+        return redirect()->route('danhmuc.index')->with('success', 'Cập nhật danh mục thành công!');
     }
 
     public function destroy($id)
