@@ -46,6 +46,9 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        $request->merge([
+            'tensp' => trim($request->input('tensp')),
+        ]);
         $validatedData = $request->validate([
             'tensp' => 'required|max:255',
             'anhsp' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -56,6 +59,7 @@ class ProductController extends Controller
             'soluong' => 'required|numeric',
             'id_danhmuc' => 'required',
         ], [
+            'tensp.required' => 'Tên sản phẩm không được để trống.',
             'tensp.max' => 'Chiều dài tên sản phẩm không được vượt quá 255 ký tự.',
             'giamgia.max' => 'Chiều dài tên sản phẩm không được vượt quá 100 ký tự.',
         ]);
