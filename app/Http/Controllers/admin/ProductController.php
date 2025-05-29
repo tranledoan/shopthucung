@@ -46,9 +46,9 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $request->merge([
-            'tensp' => trim($request->input('tensp')),
-        ]);
+       $request->merge([
+        'tensp' => preg_replace('/\s+/u', '', $request->input('tensp')), // Loại bỏ tất cả khoảng trắng Unicode
+    ]);
         $validatedData = $request->validate([
             'tensp' => 'required|max:255',
             'anhsp' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
