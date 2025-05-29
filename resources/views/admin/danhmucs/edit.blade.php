@@ -2,6 +2,11 @@
 @section('admin_content')
 <h1 class="h3 mb-3"><strong>Sửa danh mục</strong></h1>
 
+@if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
     <div class="err">
         @if($errors->any())
         <ul>
@@ -23,6 +28,7 @@
         </div>
 
         <div>
+            <input type="hidden" name="version" value="{{ $version }}">
             <input type="submit" class="btn btn-primary" value="Update">
             &nbsp;<a class="btn btn-secondary" href="{{URL::to('/admin/danhmucs')}}">Hủy</a>
         </div>
