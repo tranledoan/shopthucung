@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\Danhmuc;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Repositories\IDanhmucRepository;
 
 class DanhmucController extends Controller
@@ -87,8 +87,16 @@ class DanhmucController extends Controller
 
     public function destroy($id)
     {
-        $this->DanhmucRepository->deleteDanhmuc($id);
+        try {
+            $item = Danhmuc::findOrFail($id);
+            $item->delete();
 
-        return redirect()->route('danhmuc.index')->with('success', 'Xóa danh mục thành công');
+            return redirect()->back()->with('success', 'Xóa thành công.');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->back()->with('error', 'Bản ghi không tồn tại hoặc đã bị xóa.');
+        }
+        // $this->DanhmucRepository->deleteDanhmuc($id);
+
+        // return redirect()->route('danhmuc.index')->with('success', 'Xóa danh mục thành công');
     }
 }
