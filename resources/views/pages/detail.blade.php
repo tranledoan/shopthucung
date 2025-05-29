@@ -1,5 +1,10 @@
 @extends('layout')
 @section('content')
+@if(session('error'))
+<script>
+    alert("{{ session('error') }}");
+</script>
+@endif
     <!--Main-->
     <div class="body" style="padding-top: 50px;">
         <a class="buy_continute" href="{{URL::to('/')}}"><i class="fa fa-arrow-circle-left"></i> Trở lại mua hàng</a>
