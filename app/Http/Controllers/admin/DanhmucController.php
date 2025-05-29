@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\admin;
+
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -52,15 +53,21 @@ class DanhmucController extends Controller
 
     public function store(Request $request)
     {
-
+        // Validate dữ liệu nhập vào với quy tắc `unique` để kiểm tra trùng lặp
         $validatedData = $request->validate([
-            'ten_danhmuc' => 'required',
+            'ten_danhmuc' => 'required|unique:danhmuc,ten_danhmuc|max:255',  // Kiểm tra trùng lặp tên danh mục
+        ], [
+            'ten_danhmuc.unique' => 'Tên danh mục này đã tồn tại. Vui lòng chọn tên khác.',  // Thông báo lỗi nếu trùng lặp
+            'ten_danhmuc.required' => 'Tên danh mục không được để trống.',
+            'ten_danhmuc.max' => 'Tên danh mục không được dài quá 255 ký tự.',
         ]);
 
+        // Nếu không có lỗi validation, tiếp tục lưu danh mục
         $this->DanhmucRepository->storeDanhmuc($validatedData);
 
-        return redirect()->route('danhmuc.index');
+        return redirect()->route('danhmuc.index')->with('success', 'Danh mục đã được thêm thành công!');
     }
+
 
     public function edit($id)
     {
@@ -84,5 +91,4 @@ class DanhmucController extends Controller
 
         return redirect()->route('danhmuc.index')->with('success', 'Xóa danh mục thành công');
     }
-
 }
