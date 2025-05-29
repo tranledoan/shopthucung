@@ -47,14 +47,17 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'tensp' => 'required',
+            'tensp' => 'required|max:255',
             'anhsp' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'giasp' => 'required|decimal:0,2',
             'mota' => 'nullable',
             'giamgia' => 'nullable|numeric|min:0|max:100',
             'giakhuyenmai' => 'nullable|decimal:0,2',
             'soluong' => 'required|numeric',
-            'id_danhmuc' => 'required'
+            'id_danhmuc' => 'required',
+        ], [
+            'tensp.max' => 'Chiều dài tên sản phẩm không được vượt quá 255 ký tự.',
+            'giamgia.max' => 'Chiều dài tên sản phẩm không được vượt quá 100 ký tự.',
         ]);
 
         // Xử lý upload hình ảnh
@@ -65,7 +68,7 @@ class ProductController extends Controller
             $validatedData['anhsp'] = 'frontend_storage/upload/' . $filename;
         }
 
-        // Tính giá khuyến mãi nếu có giảm giá
+        // Tính giá khuyến mãi nếu có giảm giá  
         $giagoc = $validatedData['giasp'];
         $giamgia = $validatedData['giamgia'] ?? 0;
         $tinh = ($giagoc * $giamgia) / 100;
