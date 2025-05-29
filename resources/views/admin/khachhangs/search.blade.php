@@ -53,8 +53,8 @@
                         @endif
                     </td>
                     <td colspan="2">
-                        <a href="#" class="btn btn-warning mb-2">Edit</a>
-                        <form method="post" action="#">
+                        <a href="{{ route('adminEditUser', $khachhang->id_kh) }}" class="btn btn-warning mb-2">Edit</a>
+                        <form method="post" action="{{ route('adminDeleteUser', $khachhang->id_kh) }}" style="display:inline;">
                             @csrf
                             @method('delete')
                             <input type="submit" class="btn btn-danger" value="Delete"

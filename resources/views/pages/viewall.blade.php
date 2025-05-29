@@ -8,7 +8,11 @@
         </a>
         <h2 class="text-center">TẤT CẢ SẢN PHẨM</h2>
     </div>
-
+@if(session('error'))
+    <div class="alert alert-danger text-center">
+        {{ session('error') }}
+    </div>
+@endif
 
     <div>
         <div class="row">

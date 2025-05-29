@@ -16,7 +16,7 @@ class Khachhang extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'hoten', 'email', 'password', 'diachi', 'sdt', 'id_phanquyen'
+        'hoten', 'email', 'password', 'diachi', 'sdt', 'id_phanquyen','is_superadmin'
     ];
 
     /**
@@ -37,6 +37,7 @@ class Khachhang extends Authenticatable
         'id_kh' => 'int',
         'sdt' => 'int',
         'id_phanquyen' => 'int',
+        'is_superadmin' => 'boolean',
     ];
 
     /**

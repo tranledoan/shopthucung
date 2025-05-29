@@ -58,11 +58,30 @@ class HomeController extends Controller
     }
 
     // xem them
-    public function viewAll()
-    {
-        $viewAllPaginations = $this->sanphamRepository->viewAllWithPagi();
-        return view('pages.viewall', ['sanphams' => $viewAllPaginations]);
+   public function viewAll(Request $request)
+{
+    $page = $request->page ?? 1;
+
+    // Kiểm tra page có phải số nguyên dương hay không
+    if (!ctype_digit(strval($page)) || (int)$page < 1) {
+        return redirect()->route('viewAll', ['page' => 1])
+            ->with('error', 'Số trang không hợp lệ. Đã chuyển về trang đầu.');
     }
+
+    // Lấy dữ liệu phân trang
+    $products = SanPham::paginate(10, ['*'], 'page', $page);
+
+    // Nếu page vượt quá max page thì redirect về trang cuối cùng kèm thông báo lỗi
+    if ($page > $products->lastPage()) {
+        return redirect()->route('viewAll', ['page' => $products->lastPage()])
+            ->with('error', 'Trang bạn yêu cầu vượt quá số trang tối đa. Đã chuyển về trang cuối.');
+    }
+
+    // Trả view với dữ liệu products
+    return view('pages.viewall', ['sanphams' => $products]);
+}
+
+
     public function services()
     {
         return view('pages.services');
