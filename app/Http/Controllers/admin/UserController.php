@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Khachhang;
 use App\Models\Phanquyen;
+use Illuminate\Validation\Rule;
+
 
 use App\Repositories\IUserRepository;
 
@@ -53,29 +55,29 @@ class UserController extends Controller
 
         return view('admin.khachhangs.search', compact('searchs', 'tukhoa'));
     }
-   public function destroy($id)
-{
-    $khachhang = Khachhang::find($id);
-    $currentUser = auth()->user(); // người dùng đang đăng nhập
+    public function destroy($id)
+    {
+        $khachhang = Khachhang::find($id);
+        $currentUser = auth()->user(); // người dùng đang đăng nhập
 
-    if (!$khachhang) {
-        return redirect()->back()->with('error', 'User không tồn tại.');
+        if (!$khachhang) {
+            return redirect()->back()->with('error', 'User không tồn tại.');
+        }
+
+        // Nếu tài khoản muốn xóa là super admin
+        if ($khachhang->is_superadmin) {
+            return redirect()->back()->with('error', 'Không thể xóa Super Admin.');
+        }
+
+        // Nếu người đăng nhập không phải super admin mà muốn xóa admin thường
+        if (!$currentUser->is_superadmin && $khachhang->id_phanquyen == 1) {
+            return redirect()->back()->with('error', 'Bạn không có quyền xóa Admin.');
+        }
+
+        $khachhang->delete();
+
+        return redirect()->back()->with('success', 'Xóa user thành công.');
     }
-
-    // Nếu tài khoản muốn xóa là super admin
-    if ($khachhang->is_superadmin) {
-        return redirect()->back()->with('error', 'Không thể xóa Super Admin.');
-    }
-
-    // Nếu người đăng nhập không phải super admin mà muốn xóa admin thường
-    if (!$currentUser->is_superadmin && $khachhang->id_phanquyen == 1) {
-        return redirect()->back()->with('error', 'Bạn không có quyền xóa Admin.');
-    }
-
-    $khachhang->delete();
-
-    return redirect()->back()->with('success', 'Xóa user thành công.');
-}
 
     public function editUser($id)
     {
@@ -83,30 +85,60 @@ class UserController extends Controller
         return view('admin.khachhangs.edit', compact('khachhang'));
     }
 
- public function updateUser(Request $request, $id)
-{
-    $khachhang = Khachhang::findOrFail($id);
-    $currentUser = auth()->user();
+    //  public function updateUser(Request $request, $id)
+// {
+//     $khachhang = Khachhang::findOrFail($id);
+//     $currentUser = auth()->user();
 
-    // Không cho sửa super admin
-    if ($khachhang->is_superadmin) {
-        return redirect()->back()->with('error', 'Không thể sửa Super Admin.');
+    //     // Không cho sửa super admin
+//     if ($khachhang->is_superadmin) {
+//         return redirect()->back()->with('error', 'Không thể sửa Super Admin.');
+//     }
+
+    //     // Nếu user thường muốn sửa admin thì cấm
+//     if (!$currentUser->is_superadmin && $khachhang->id_phanquyen == 1) {
+//         return redirect()->back()->with('error', 'Bạn không có quyền sửa Admin.');
+//     }
+
+    //     $request->validate([
+//         'id_phanquyen' => 'required|in:1,2,3',
+//     ]);
+
+    //     $khachhang->id_phanquyen = $request->id_phanquyen;
+//     $khachhang->save();
+
+    //     return redirect()->route('khachhang.index')->with('success', 'Cập nhật quyền thành công!');
+// }
+    public function updateUser(Request $request, $id)
+    {
+        $khachhang = Khachhang::findOrFail($id);
+        $currentUser = auth()->user();
+
+        if ($khachhang->is_superadmin) {
+            return redirect()->back()->with('error', 'Không thể sửa Super Admin.');
+        }
+
+        if (!$currentUser->is_superadmin && $khachhang->id_phanquyen == 1) {
+            return redirect()->back()->with('error', 'Bạn không có quyền sửa Admin.');
+        }
+
+        $request->validate([
+            'id_phanquyen' => [
+                'required',
+                Rule::exists('phanquyen', 'id_phanquyen'),
+            ],
+        ]);
+
+        try {
+            $khachhang->id_phanquyen = $request->id_phanquyen;
+            $khachhang->save();
+
+            return redirect()->route('khachhang.index')->with('success', 'Cập nhật quyền thành công!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Có lỗi xảy ra khi cập nhật. Vui lòng thử lại.');
+        }
     }
 
-    // Nếu user thường muốn sửa admin thì cấm
-    if (!$currentUser->is_superadmin && $khachhang->id_phanquyen == 1) {
-        return redirect()->back()->with('error', 'Bạn không có quyền sửa Admin.');
-    }
-
-    $request->validate([
-        'id_phanquyen' => 'required|in:1,2,3',
-    ]);
-
-    $khachhang->id_phanquyen = $request->id_phanquyen;
-    $khachhang->save();
-
-    return redirect()->route('khachhang.index')->with('success', 'Cập nhật quyền thành công!');
-}
 
 
 
