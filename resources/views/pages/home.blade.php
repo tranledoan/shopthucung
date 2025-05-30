@@ -18,6 +18,20 @@
     </div>
 
 </div>
+<style>
+.product__img {
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+}
+
+.product__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
+
+    </style>
 
 <!-- Sản phẩm nổi bật -->
 <div class="body">
