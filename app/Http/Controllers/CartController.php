@@ -48,28 +48,41 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Thêm vào giỏ hàng thành công!');
     }
     public function addGoToCart($id)
-    {
-        $product = Sanpham::findOrFail($id);
+{
+    $product = Sanpham::find($id); // dùng find thay vì findOrFail
 
-        $cart = session()->get('cart', []);
-
-        if (isset($cart[$id])) {
-            $cart[$id]['quantity']++;
-        } else {
-            $cart[$id] = [
-                "id_sanpham" => $product->id_sanpham,
-                "tensp" => $product->tensp,
-                "anhsp" => $product->anhsp,
-                "giasp" => $product->giasp,
-                "giamgia" => $product->giamgia,
-                "giakhuyenmai" => $product->giakhuyenmai,
-                "quantity" => 1
-            ];
-        }
-
-        session()->put('cart', $cart);
-        return redirect('/cart');
+    // Nếu không tìm thấy sản phẩm
+    if (!$product) {
+        return redirect()->back()->with('error', 'Sản phẩm không tồn tại hoặc đã bị xóa.');
     }
+
+    // Lấy giỏ hàng từ session
+    $cart = session()->get('cart', []);
+
+    if (isset($cart[$id])) {
+        $cart[$id]['quantity']++;
+    } else {
+        $cart[$id] = [
+            "id_sanpham" => $product->id_sanpham,
+            "tensp" => $product->tensp,
+            "anhsp" => $product->anhsp,
+            "giasp" => $product->giasp,
+            "giamgia" => $product->giamgia,
+            "giakhuyenmai" => $product->giakhuyenmai,
+            "quantity" => 1
+        ];
+    }
+
+    // Cập nhật lại session
+    session()->put('cart', $cart);
+
+    // Nếu giỏ hàng rỗng thì không chuyển trang
+    if (empty($cart)) {
+        return redirect()->back()->with('error', 'Hiện không có sản phẩm nào trong giỏ hàng.');
+    }
+    return redirect('/cart')->with('success', 'Đã thêm vào giỏ hàng.');
+}
+
 
     public function update(Request $request)
     {
@@ -81,17 +94,20 @@ class CartController extends Controller
         }
     }
 
-    public function remove(Request $request)
-    {
-        if ($request->id) {
-            $cart = session()->get('cart');
-            if (isset($cart[$request->id])) {
-                unset($cart[$request->id]);
-                session()->put('cart', $cart);
-            }
-            session()->flash('success', 'Xóa sản phẩm trong giỏ hàng thành công');
-        }
+public function remove(Request $request)
+{
+    $cart = session()->get('cart', []);
+
+    if ($request->id && isset($cart[$request->id])) {
+        unset($cart[$request->id]);
+        session()->put('cart', $cart);
+
+        return response()->json(['success' => true, 'message' => 'Đã xóa sản phẩm.']);
     }
+
+    return response()->json(['success' => false, 'message' => 'Sản phẩm không tồn tại trong giỏ hàng.']);
+}
+
 
     public function checkout()
     {

@@ -127,12 +127,12 @@
         $('#checkout').attr('action', "{{route('dathang')}}");
     });
 
-    //chuyen khoan vnpay
-    $('#vnpay').click(function () {
-        // $('#vnpay').attr('value', 'VNPAY');
-        $('#checkout').attr('action', "{{route('vnpay')}}");
+    // //chuyen khoan vnpay
+    // $('#vnpay').click(function () {
+    //     // $('#vnpay').attr('value', 'VNPAY');
+    //     $('#checkout').attr('action', "{{route('vnpay')}}");
 
-    });
+    // });
 
 </script>
 

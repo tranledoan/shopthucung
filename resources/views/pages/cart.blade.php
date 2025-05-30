@@ -225,22 +225,33 @@ cart_removes.forEach(function(cart_remove) {
         e.preventDefault();
 
         var ele3 = $(this);
+        var id = ele3.parents("tr").attr("data-id");
 
         if(confirm("Bạn có thật sự muốn xóa?")) {
             $.ajax({
-                url: '{{ route('remove_from_cart') }}',
-                method: "DELETE",
-                data: {
-                    _token: '{{ csrf_token() }}', 
-                    id: ele3.parents("tr").attr("data-id")
-                },
-                success: function (response) {
-                    window.location.reload();
-                }
-            });
+    url: '{{ route('remove_from_cart') }}',
+    method: "DELETE",
+    data: {
+        _token: '{{ csrf_token() }}',
+        id: ele3.parents("tr").attr("data-id")
+    },
+    success: function (response) {
+        if (response.success) {
+            window.location.reload();
+        } else {
+            alert(response.message); 
         }
-    })
-})
+    },
+    error: function () {
+        alert("Đã xảy ra lỗi khi xóa sản phẩm.");
+    }
+});
+
+        }
+    });
+});
+
+
 
 </script>
 
