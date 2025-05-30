@@ -6,12 +6,12 @@ use Illuminate\Support\Facades\Schema;
 
 class AddIsSuperadminToKhachhangTable extends Migration
 {
-    public function up()
-    {
-        Schema::table('khachhang', function (Blueprint $table) {
-            $table->boolean('is_superadmin')->default(false);
-        });
-    }
+    // public function up()
+    // {
+    //     Schema::table('khachhang', function (Blueprint $table) {
+    //         $table->boolean('is_superadmin')->default(false);
+    //     });
+    // }
 
     public function down()
     {
