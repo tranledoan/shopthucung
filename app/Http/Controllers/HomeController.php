@@ -8,7 +8,7 @@ use App\Models\Sanpham;
 
 use App\Repositories\ISanphamRepository;
 use Illuminate\Support\Facades\Session;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\URL;
 
 class HomeController extends Controller
@@ -87,17 +87,27 @@ class HomeController extends Controller
         return view('pages.services');
     }
 
-     public function search(Request $request){
+    public function search(Request $request)
+    {
         $searchs = $this->sanphamRepository->searchProduct($request);
         return view('pages.search')->with('searchs', $searchs)->with('tukhoa', $request->input('tukhoa'));
-     }
-
-     public function detail($id){
-        // Lấy thông tin của sản phẩm dựa trên $id
-        $sanpham = Sanpham::findOrFail($id);
-        $randoms = $this->sanphamRepository->randomProduct()->take(5);
-        return view('pages.detail', ['sanpham' => $sanpham, 'randoms' => $randoms]);
-
     }
 
+    public function detail($id)
+    {
+        if (!is_numeric($id)) {
+            // Nếu ID không hợp lệ, trả về thông báo lỗi
+             return redirect()->route('detail', ['id' => 1])->with('error', 'Không tìm thấy trang.');
+        }
+
+        try {
+            // Tìm sản phẩm theo ID, nếu không tìm thấy sẽ ném ra ModelNotFoundException
+            $sanPham = SanPham::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            // Nếu không tìm thấy sản phẩm, trả về thông báo lỗi
+            return redirect()->route('detail', ['id' => 1])->with('error', 'Không tìm thấy trang.');
+        }
+        $randoms = $this->sanphamRepository->randomProduct()->take(5);
+        return view('pages.detail', ['sanpham' => $sanPham, 'randoms' => $randoms]);
+    }
 }
