@@ -57,7 +57,7 @@ class AuthController extends Controller
         $user = Auth::user();
         $request->validate([
             'email' => 'required|email|max:100',
-            'password' => 'required|min:6|max:6464'
+            'password' => 'required|min:6|max:64'
         ], [
             'email.required' => 'Vui lòng nhập email',
             'email.email' => 'Email không hợp lệ',
