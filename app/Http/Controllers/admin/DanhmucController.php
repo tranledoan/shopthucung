@@ -53,16 +53,22 @@ class DanhmucController extends Controller
 
     public function store(Request $request)
     {
-        // Validate dữ liệu nhập vào với quy tắc `unique` để kiểm tra trùng lặp
+        // Validate dữ liệu nhập vào
         $validatedData = $request->validate([
-            'ten_danhmuc' => 'required|unique:danhmuc,ten_danhmuc|max:255',  // Kiểm tra trùng lặp tên danh mục
+            'ten_danhmuc' => [
+                'required',
+                'unique:danhmuc,ten_danhmuc',
+                'max:255',
+                'regex:/^[^\x{3000}]+$/u' // Không cho phép khoảng trắng 2 byte
+            ],
         ], [
-            'ten_danhmuc.unique' => 'Tên danh mục này đã tồn tại. Vui lòng chọn tên khác.',  // Thông báo lỗi nếu trùng lặp
             'ten_danhmuc.required' => 'Tên danh mục không được để trống.',
+            'ten_danhmuc.unique' => 'Tên danh mục này đã tồn tại. Vui lòng chọn tên khác.',
             'ten_danhmuc.max' => 'Tên danh mục không được dài quá 255 ký tự.',
+            'ten_danhmuc.regex' => 'Tên danh mục không được chứa khoảng trắng 2 byte (　).',
         ]);
 
-        // Nếu không có lỗi validation, tiếp tục lưu danh mục
+        // Nếu không có lỗi, tiếp tục lưu danh mục
         $this->DanhmucRepository->storeDanhmuc($validatedData);
 
         return redirect()->route('danhmuc.index')->with('success', 'Danh mục đã được thêm thành công!');
